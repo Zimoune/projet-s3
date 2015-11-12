@@ -8,9 +8,10 @@ def initSituation(game):
 
     :param game: the game for which the initial situation is created
     :type game: game
-    :returns: *(situation)* the siutation at the beginning of the game
+    :returns: *(situation)* the situation at the beginning of the game
     """
-    raise NotImplementedError( "initSituation must be defined to return the initial game configuration" )
+    return make_game()
+    #raise NotImplementedError( "initSituation must be defined to return the initial game configuration" )
 
 def isFinished(situation):
     """
@@ -97,3 +98,47 @@ def humanPlayerPlays(game, player, situation):
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
     raise NotImplementedError( "humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned" )
+
+
+
+
+def make_game(name1, name2, grid):
+    """
+    return a tictactoe game of size 3*3 cells and with two player
+
+    :param name1: a name
+    :type name1: a string
+    :param name2: a name
+    :type name2: a string
+    :return: a game
+    :rtype: a tuple
+    """
+    cross=""
+    circle=""
+    player1 = Player.create(name1 , cross)
+    player2 = Player.create(name2 , circle)
+    return(player1, player2, grid)
+
+
+
+def make_grid():
+    """
+    return a tictactoe grid of size 3*3 cells
+
+    :return: a grid with 3*3 cells
+    :rtype: llist of list of cells
+    """
+    return [[make_cell() for y in range(3)] for x in range(3)]
+    
+
+
+
+def make_cell():
+    """
+    return a tictactoe cell
+
+    :return: a cell with his color
+    :rtype: a cell
+    """
+    return {"color" : None}
+            
