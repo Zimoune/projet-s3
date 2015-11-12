@@ -8,8 +8,8 @@
 
 :data: November, 2015
 
-Module for joueur representation
-A Joueur
+Module for player representation
+A Player
 """
 
 def create(name, color):
@@ -19,7 +19,7 @@ def create(name, color):
     :type name: str
 
     :return: a new record for this player
-    :rtype: joueur
+    :rtype: player
     """
     assert type(name) == str
     assert type(color) == str
@@ -32,7 +32,7 @@ def get_name(player):
     """
 
     :param player: a player
-    :type player: joueur
+    :type player: player
 
     :return: name of player
     :rtype: str
@@ -46,7 +46,7 @@ def set_name(name, player):
     :param name: the new name
     :type name: str
     :param player: the player
-    :type player: joueur
+    :type player: player
 
     :return: None
     """
@@ -56,7 +56,7 @@ def get_color(player):
     """
 
     :param player: a player
-    :type player: joueur
+    :type player: player
 
     :return: color of player
     :rtype: str
@@ -70,7 +70,7 @@ def set_color(color, player):
     :param color: the new color
     :type color: str
     :param player: the player
-    :type player: joueur
+    :type player: player
     :return: None
     """
     player['color'] = color
