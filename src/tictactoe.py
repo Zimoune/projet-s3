@@ -3,6 +3,14 @@
 
 import player as Player
 
+
+#------Color-----#
+
+cross=""
+circle=""
+
+#----------------#
+
 def initSituation(game):
     """builds the initial situation for the game. 
 
@@ -11,7 +19,8 @@ def initSituation(game):
     :returns: *(situation)* the situation at the beginning of the game
     """
     return make_game()
-    #raise NotImplementedError( "initSituation must be defined to return the initial game configuration" )
+
+
 
 def isFinished(situation):
     """
@@ -97,6 +106,16 @@ def humanPlayerPlays(game, player, situation):
     :type situation: a game situation
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
+    coord = input("Where would you play?  ")
+    try:
+        x,y = coord.split(',')
+        game[2][int(x)][int(y)]["color"] = player["color"]
+        return game
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except:
+        print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
+        humanPlayerPlays(game,player,situation)
     raise NotImplementedError( "humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned" )
 
 
@@ -113,8 +132,6 @@ def make_game(name1, name2, grid):
     :return: a game
     :rtype: a tuple
     """
-    cross=""
-    circle=""
     player1 = Player.create(name1 , cross)
     player2 = Player.create(name2 , circle)
     return(player1, player2, grid)
@@ -128,7 +145,7 @@ def make_grid():
     :return: a grid with 3*3 cells
     :rtype: llist of list of cells
     """
-    return [[make_cell() for y in range(3)] for x in range(3)]
+    return [[make_cell() for x in range(3)] for y in range(3)]
     
 
 
