@@ -2,14 +2,31 @@
 # -*- coding: utf-8 -*-
 
 import player as Player
+from enum import Enum
 
 
-#------Color-----#
+#######Color######
 
 cross=""
 circle=""
 
-#----------------#
+##################
+
+class GameState (Enum):
+    """
+    A class to define an enumerated type with three values :
+
+    * ``winning``
+    * ``losing``
+    * ``unfinished``
+    
+    for the three state of minesweeper game.
+    """
+    winning = 1
+    losing = 2
+    unfinished = 3
+
+
 
 def initSituation(game):
     """builds the initial situation for the game. 
@@ -61,7 +78,14 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    raise NotImplementedError( "nextSituations must be defined as a function that provides successor situations" )
+    grid = game[2]
+    l_situations = []
+    for x in range(3):
+        for y in range(3):
+            if grid[x][y]['color'] == None:
+                l_situations += [grid[x][y]['position']]
+    return l_situations
+    #raise NotImplementedError( "nextSituations must be defined as a function that provides successor situations" )
 
 
 
@@ -79,7 +103,14 @@ def getWinner(game, situation, player):
 
     :CU: situation is a final situation
     """
-    raise NotImplementedError( "getWinner function must be defined to tell who win the game" )    
+    if situation == GameState.winning:
+        for player_nb in range(2):
+            if Player.get_name(game[player_nb]) != Player.get_name(player):
+                return game[player_nb]
+    else:
+        return None
+
+    
 
 
 
@@ -116,7 +147,7 @@ def humanPlayerPlays(game, player, situation):
     except:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
         humanPlayerPlays(game,player,situation)
-    raise NotImplementedError( "humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned" )
+
 
 
 
@@ -145,17 +176,17 @@ def make_grid():
     :return: a grid with 3*3 cells
     :rtype: llist of list of cells
     """
-    return [[make_cell() for x in range(3)] for y in range(3)]
+    return [[make_cell(x,y) for x in range(3)] for y in range(3)]
     
 
 
 
-def make_cell():
+def make_cell(x,y):
     """
     return a tictactoe cell
 
     :return: a cell with his color
     :rtype: a cell
     """
-    return {"color" : None}
+    return {"color" : None , "position" : (x,y)}
             
