@@ -5,12 +5,6 @@ import player as Player
 from enum import Enum
 
 
-#######Color######
-
-cross=""
-circle=""
-
-##################
 
 class GameState (Enum):
     """
@@ -47,6 +41,7 @@ def isFinished(situation):
     :type situation: a game situation
     :returns: *(boolean)* -- True if the given situation ends the game
     """
+    
     raise NotImplementedError( "isFinished must be defined as a function to test end of game" )
 
 
@@ -78,14 +73,13 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    grid = game[2]
     l_situations = []
     for x in range(3):
         for y in range(3):
-            if grid[x][y]['color'] == None:
-                l_situations += [grid[x][y]['position']]
+            if situation[x][y]['color'] == None:
+                l_situations += [situation[x][y]['position']]
     return l_situations
-    #raise NotImplementedError( "nextSituations must be defined as a function that provides successor situations" )
+    
 
 
 
@@ -103,15 +97,10 @@ def getWinner(game, situation, player):
 
     :CU: situation is a final situation
     """
-    if situation == GameState.winning:
-        for player_nb in range(2):
-            if Player.get_name(game[player_nb]) != Player.get_name(player):
-                return game[player_nb]
-    else:
-        return None
+    
+    pass
 
     
-
 
 
 
@@ -140,7 +129,7 @@ def humanPlayerPlays(game, player, situation):
     coord = input("Where would you play?  ")
     try:
         x,y = coord.split(',')
-        game[2][int(x)][int(y)]["color"] = player["color"]
+        situation[int(x)][int(y)]["color"] = player["color"]
         return game
     except KeyboardInterrupt:
         raise KeyboardInterrupt
@@ -150,6 +139,22 @@ def humanPlayerPlays(game, player, situation):
 
 
 
+def get_none_empty_cells(situation):
+    l_circle=[]
+    l_cross=[]
+    for x_list in situation:
+        for elt in x_list:
+            if elt['color'] == "circle":
+                l_circle += [elt]
+
+            elif elt['color'] == "cross":
+                l_cross += [elt]
+    return (l_circle , l_cross)
+
+
+
+def 2align_cells(cells_none_empty):
+    pass
 
 
 def make_game(name1, name2, grid):
@@ -163,8 +168,8 @@ def make_game(name1, name2, grid):
     :return: a game
     :rtype: a tuple
     """
-    player1 = Player.create(name1 , cross)
-    player2 = Player.create(name2 , circle)
+    player1 = Player.create(name1 , "cross")
+    player2 = Player.create(name2 , "circle")
     return(player1, player2, grid)
 
 
@@ -176,7 +181,7 @@ def make_grid():
     :return: a grid with 3*3 cells
     :rtype: llist of list of cells
     """
-    return [[make_cell(x,y) for x in range(3)] for y in range(3)]
+    return [[make_cell(x,y) for y in range(3)] for x in range(3)]
     
 
 
