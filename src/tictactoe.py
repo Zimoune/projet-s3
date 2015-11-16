@@ -2,23 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import player as Player
-from enum import Enum
-
-
-
-class GameState (Enum):
-    """
-    A class to define an enumerated type with three values :
-
-    * ``winning``
-    * ``losing``
-    * ``unfinished``
-    
-    for the three state of minesweeper game.
-    """
-    winning = 1
-    losing = 2
-    unfinished = 3
 
 
 
@@ -29,20 +12,58 @@ def initSituation(game):
     :type game: game
     :returns: *(situation)* the situation at the beginning of the game
     """
-    return make_game()
+    data = input("names player?  ")
+    try:
+        l_name = data.split(",")
+        name1 =  l_name[0]
+        name2 = l_name[1]
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except:
+        initSituation(game)
+    
+    return make_game(name1, name2)
 
 
 
-def isFinished(situation):
+def isFinished(situation ,  nb_plays):
     """
     tells if the game is finished when in given situation
 
     :param situation: the tested situation
     :type situation: a game situation
+    :param nb_plays: number of plays (How much cells not empty
+    :type nb_plays: a integer
     :returns: *(boolean)* -- True if the given situation ends the game
     """
-    
-    raise NotImplementedError( "isFinished must be defined as a function to test end of game" )
+
+    if nb_plays == 9:
+        return True
+    elif nb_plays >= 5:
+        if situation[0][0]['color'] == situation[0][1]['color'] and situation[0][0]['color'] == situation[0][3]['color']:
+            return True
+        if situation[1][0]['color'] == situation[1][1]['color'] and situation[1][0]['color'] == situation[1][3]['color']:
+            return True
+        if situation[2][0]['color'] == situation[2][1]['color'] and situation[2][0]['color'] == situation[2][3]['color']:
+            return True
+
+        if situation[0][0]['color'] == situation[1][0]['color'] and situation[0][0]['color'] == situation[2][0]['color']:
+            return True
+        if situation[0][1]['color'] == situation[1][1]['color'] and situation[2][1]['color'] == situation[2][1]['color']:
+            return True
+        if situation[0][2]['color'] == situation[1][2]['color'] and situation[0][2]['color'] == situation[2][2]['color']:
+            return True
+
+        
+        if situation[0][0]['color'] == situation[1][1]['color'] and situation[0][0]['color'] == situation[2][2]['color']:
+            return True
+        if situation[0][2]['color'] == situation[1][1]['color'] and situation[0][2]['color'] == situation[2][0]['color']:
+            return True
+        else:
+            return False
+        
+    else:
+        return False
 
 
 
@@ -58,7 +79,14 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    raise NotImplementedError( "playerCanPlay must be defined to determine whether player can play")
+    for x in range(3):
+        for y in range(3):
+            if game['grid'][x][y]['color'] != situation[x][y]['color']:
+                if game['grid'][x][y]['color'] == None:
+                    return True
+                else:
+                    return False
+    return False
 
 
 def nextSituations(game, situation, player):
@@ -98,9 +126,12 @@ def getWinner(game, situation, player):
     :CU: situation is a final situation
     """
     
-    pass
+    if game['nb_plays'] == 9:
+        return None
+    else:
+        return player
 
-    
+
 
 
 
@@ -139,25 +170,9 @@ def humanPlayerPlays(game, player, situation):
 
 
 
-def get_none_empty_cells(situation):
-    l_circle=[]
-    l_cross=[]
-    for x_list in situation:
-        for elt in x_list:
-            if elt['color'] == "circle":
-                l_circle += [elt]
-
-            elif elt['color'] == "cross":
-                l_cross += [elt]
-    return (l_circle , l_cross)
 
 
-
-def 2align_cells(cells_none_empty):
-    pass
-
-
-def make_game(name1, name2, grid):
+def make_game(name1, name2):
     """
     return a tictactoe game of size 3*3 cells and with two player
 
@@ -170,7 +185,7 @@ def make_game(name1, name2, grid):
     """
     player1 = Player.create(name1 , "cross")
     player2 = Player.create(name2 , "circle")
-    return(player1, player2, grid)
+    return {"player1" : player1 , "player2" : player2 , "grid" : make_grid() , "nb_plays" : 0}
 
 
 
