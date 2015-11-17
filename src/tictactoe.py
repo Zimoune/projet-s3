@@ -3,6 +3,14 @@
 
 import player as Player
 
+import tictactoeGame as Game
+
+#### default_game ####
+
+game = Game.make_game()
+
+######################
+
 
 
 def initSituation(game):
@@ -17,12 +25,14 @@ def initSituation(game):
         l_name = data.split(",")
         name1 =  l_name[0]
         name2 = l_name[1]
+        game['player1'] == Player.create(name1, "cross")
+        game['player2'] == Player.create(name2, "circle")
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except:
         initSituation(game)
     
-    return make_game(name1, name2)
+    return game['grid']
 
 
 
@@ -142,7 +152,8 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    raise NotImplementedError( "displaySituation must be defined to display the situation on the screen" )
+
+    game['grid'] == situation
 
 
 def humanPlayerPlays(game, player, situation):
@@ -171,42 +182,4 @@ def humanPlayerPlays(game, player, situation):
 
 
 
-
-def make_game(name1, name2):
-    """
-    return a tictactoe game of size 3*3 cells and with two player
-
-    :param name1: a name
-    :type name1: a string
-    :param name2: a name
-    :type name2: a string
-    :return: a game
-    :rtype: a tuple
-    """
-    player1 = Player.create(name1 , "cross")
-    player2 = Player.create(name2 , "circle")
-    return {"player1" : player1 , "player2" : player2 , "grid" : make_grid() , "nb_plays" : 0}
-
-
-
-def make_grid():
-    """
-    return a tictactoe grid of size 3*3 cells
-
-    :return: a grid with 3*3 cells
-    :rtype: llist of list of cells
-    """
-    return [[make_cell(x,y) for y in range(3)] for x in range(3)]
-    
-
-
-
-def make_cell(x,y):
-    """
-    return a tictactoe cell
-
-    :return: a cell with his color
-    :rtype: a cell
-    """
-    return {"color" : None , "position" : (x,y)}
             
