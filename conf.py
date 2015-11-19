@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-author = 'Le Pallac Simon & Lefebvre Ryan'
+author = 'Le Pallac Simon, Lefebvre Ryan and Touré Abdoulaye Chérif'
 project = 'Mon_projet'
 copyright = '2015, '+author+', FIL - IEEA - Univ-lille1'
 
