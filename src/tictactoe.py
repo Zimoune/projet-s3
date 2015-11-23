@@ -30,6 +30,34 @@ def get_nb_plays(game):
 def get_color(situation, x, y):
     return situation[x][y]['color']
 
+def get_position(situation, x, y):
+    return situation[x][y]['position']
+
+def get_grid_color(game, x, y):
+    return game['grid'][x][y]['color']
+
+def getWinner(game, situation, player):
+    """
+    Gives the winner of the game that end in situation
+
+    :param game: the game 
+    :type game: game
+    :param situation: the situation which is a final game situation
+    :type situation: a game situation
+    :param player: the player who should have played if situation was not final (then other player plays previous turn)
+    :type player: player
+    :returns: *(player)* -- the winner player or None in case of tie game
+
+    :CU: situation is a final situation
+    """
+    
+    if get_nb_plays(game) == 9:
+        return None
+    else:
+        return player
+
+##### Constructors #####
+
 def set_color(situation, x, y, color):
     situation[x][y]['color'] = color
 
@@ -39,13 +67,7 @@ def set_player1(player):
 def set_player2(player):
     game['player2'] = player
 
-def get_position(situation, x, y):
-    return situation[x][y]['position']
-
-def get_grid_color(game, x, y):
-    return game['grid'][x][y]['color']
-
-########################
+##### Game Management #####
 
 def initSituation(game_name):
     """builds the initial situation for the game. 
@@ -84,31 +106,6 @@ def nextSituations(game, situation, player):
             if get_color(situation, x, y) == None:
                 l_situations += [get_position(situation, x, y)]
     return l_situations
-    
-
-
-
-def getWinner(game, situation, player):
-    """
-    Gives the winner of the game that end in situation
-
-    :param game: the game 
-    :type game: game
-    :param situation: the situation which is a final game situation
-    :type situation: a game situation
-    :param player: the player who should have played if situation was not final (then other player plays previous turn)
-    :type player: player
-    :returns: *(player)* -- the winner player or None in case of tie game
-
-    :CU: situation is a final situation
-    """
-    
-    if get_nb_plays(game) == 9:
-        return None
-    else:
-        return player
-
-
 
 
 
@@ -146,6 +143,7 @@ def humanPlayerPlays(game, player, situation):
         humanPlayerPlays(game,player,situation)
 
 
+##### Predicates #####
 
 
 def isFinished(situation ,  nb_plays):
