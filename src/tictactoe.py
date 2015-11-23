@@ -35,7 +35,7 @@ def get_position(situation, x, y):
 def get_grid_color(game, x, y):
     return game['grid'][x][y]['color']
 
-def initSituation(game):
+def initSituation(game_name):
     """builds the initial situation for the game. 
 
     :param game: the game for which the initial situation is created
@@ -102,7 +102,7 @@ def playerCanPlay(game, situation, player):
     :param player: the player
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
-    """listarle/Projet-S3/commit/9859e93a0c81252b9669d36d2fc5138e2a010b88
+    """
     for x in range(3):
         for y in range(3):
             if get_grid_color(game, x, y) != get_color(situation, x, y):
@@ -167,7 +167,7 @@ def displaySituation(situation):
     :type situation: a game situation
     """
 
-    get_grid(game) == situation
+    get_grid(game) = situation
 
 
 def humanPlayerPlays(game, player, situation):
