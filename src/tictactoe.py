@@ -146,7 +146,7 @@ def humanPlayerPlays(game, player, situation):
 ##### Predicates #####
 
 
-def isFinished(situation ,  nb_plays):
+def isFinished(situation):
     """
     tells if the game is finished when in given situation
 
@@ -157,9 +157,9 @@ def isFinished(situation ,  nb_plays):
     :returns: *(boolean)* -- True if the given situation ends the game
     """
 
-    if nb_plays == 9:
+    if get_nb_plays(game) == 9:
         return True
-    elif nb_plays >= 5:
+    else:
         if get_color(situation, 0, 0) == get_color(situation, 0, 1) and get_color(situation, 0, 0) == get_color(situation, 0, 2):
             return True
         elif get_color(situation, 0, 0) == get_color(situation, 1, 1) and get_color(situation, 0, 0) == get_color(situation, 2, 2):
@@ -178,8 +178,6 @@ def isFinished(situation ,  nb_plays):
             return True
         else:
             return False
-    else:
-        return False
 
 
 
