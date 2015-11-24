@@ -9,7 +9,7 @@ currentPlayer = None
 def play():
     global currentPlayer
     situation = Game.initSituation("tictactoe")
-    while not Game.isFinished(situation, Game.get_nb_plays(Game.game)):
+    while Game.isFinished(situation):
         if currentPlayer == None:
             currentPlayer = Game.get_player1(Game.game)
         elif currentPlayer == Game.get_player1(Game.game):
@@ -18,7 +18,7 @@ def play():
             currentPlayer = Game.get_player1(Game.game)
         print(player.get_name(currentPlayer)," turn")
         Game.humanPlayerPlays(Game.game, currentPlayer, situation)
-    print(Game.getWinner(Game.game, situation, currentPlayer, "won"))
+    print(Game.getWinner(Game.game, situation, currentPlayer), "won")
           
 if __name__ == '__main__':
     play()
