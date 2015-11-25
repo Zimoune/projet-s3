@@ -127,7 +127,10 @@ def evalFunction(situation, player):
     :returns: *(number)* -- the score of the given situation for the given player.
         The better the situation for the minmax player, the higher the score. The opposite for human player.
     """
-    raise NotImplementedError( "evalFunction must be defined as an evaluation function" )
+    if situation == 1:
+        return 0*coef(player)
+    else:
+        return 1*coef(player)
 
 
 
@@ -178,4 +181,32 @@ def _input_pebbles(player, number_pebbles, number_message):
         pass
     print("illegal play, you can only take "+number_message+" pebbles")
     return _input_pebbles(player,number_pebbles, number_message)
-    
+
+
+def coef(player):
+    if player == get_player1(game):
+        return -1
+    else:
+        return 1   
+
+def get_player1(game):
+    """
+    Get the player one of the game
+
+    :param game: the game
+    :type game: a game
+    :return: the first player
+    :rtype: a player
+    """
+    return game['player1']
+
+def get_player2(game):
+    """
+    Get the player two of the game
+
+    :param game: the game
+    :type game: a game
+    :return: the seconde player
+    :rtype: a player
+    """
+    return game['player2']

@@ -16,18 +16,62 @@ game = Game.make_game()
 ##### Selectors #####
 
 def get_player1(game):
+    """
+    Get the player one of the game
+
+    :param game: the game
+    :type game: a game
+    :return: the first player
+    :rtype: a player
+    """
     return game['player1']
 
 def get_player2(game):
+    """
+    Get the player two of the game
+
+    :param game: the game
+    :type game: a game
+    :return: the seconde player
+    :rtype: a player
+    """
     return game['player2']
 
 def get_grid(game):
+    """
+    Get the grid of the game
+    
+    :param game: the game
+    :type game: a game
+    :return: the grid game
+    :rtype: a grid
+    """
     return game['grid']
 
 def get_nb_plays(game):
+    """
+    Get the number of plays of the game
+    
+    :param game: the game
+    :type game: a game
+    :return: the grid game
+    :rtype: a grid
+    """
     return game['nb_plays']
 
 def get_color(situation, x, y):
+    """
+    Get the color of a cell of the game
+    
+    :param situation: the grid situation
+    :type situation: list of lists
+    :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: the grid game
+    :rtype: a grid
+    """
     return situation[x][y]['color']
 
 def get_position(situation, x, y):
@@ -141,6 +185,13 @@ def humanPlayerPlays(game, player, situation):
     except:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
         humanPlayerPlays(game,player,situation)
+
+
+def coef(player):
+    if player == get_player1(global game):
+        return -1
+    else:
+        return 1
 
 
 ##### Predicates #####
