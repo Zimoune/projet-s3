@@ -54,8 +54,8 @@ def get_nb_plays(game):
     
     :param game: the game
     :type game: a game
-    :return: the grid game
-    :rtype: a grid
+    :return: the number of plays
+    :rtype: a integer
     """
     return game['nb_plays']
 
@@ -69,15 +69,39 @@ def get_color(situation, x, y):
     :type x: a integer
     :param y: the y's codinate of a cell
     :type y: a integer
-    :return: the grid game
-    :rtype: a grid
+    :return: the cell color
+    :rtype: a string
     """
     return situation[x][y]['color']
 
 def get_position(situation, x, y):
+    """
+    Get the postion of a cell of the game
+    
+    :param situation: the grid situation
+    :type situation: list of lists
+    :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: a position
+    :rtype: a tuple
+    """
     return situation[x][y]['position']
 
 def get_grid_color(game, x, y):
+    """
+    Get the color of a cell of the game
+    
+    :param situation: the grid situation
+    :type situation: list of lists
+    :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: the cell color
+    :rtype: a string
+    """
     return game['grid'][x][y]['color']
 
 def getWinner(game, situation, player):
@@ -103,12 +127,40 @@ def getWinner(game, situation, player):
 ##### Constructors #####
 
 def set_color(situation, x, y, color):
+    """
+    Set the color for a cell of the game
+    
+    :param situation: the grid situation
+    :type situation: list of lists
+    :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: None
+    :sidegrid effect: set the color of the cell
+    """
     situation[x][y]['color'] = color
 
 def set_player1(player):
+    """
+    Set the player 1 for the game
+    
+    :param player: the player 1 of the game
+    :type player: a player
+    :return: None
+    :sidegrid effect: set the player 1 of the game
+    """
     game['player1'] = player
 
 def set_player2(player):
+    """
+    Set the player 2 for the game
+    
+    :param player: the player 2 of the game
+    :type player: a player
+    :return: None
+    :sidegrid effect: set the player 2 of the game
+    """
     game['player2'] = player
 
 ##### Game Management #####
@@ -188,12 +240,28 @@ def humanPlayerPlays(game, player, situation):
 
 
 def coef(player):
-    if player == get_player1(global game):
+    """
+    Get a coeficient for the player
+
+    :param player: a game player
+    :type player: a player
+    :return: the coeficient player
+    :rtype: an integer
+    """
+    global game
+    if player == get_player1(game):
         return -1
     else:
         return 1
 
 def is_winner(situation):
+    """
+    Get true if the situation have a winner
+
+    :param situation: the game situation
+    :type situation: a game
+    :return: *Boolean* True if the situation have a winner
+    """
     finish_position = [[(0,0),(0,1),(0,2)],
                        [(0,0),(1,1),(2,2)],
                        [(0,1),(1,1),(2,1)],
@@ -226,26 +294,6 @@ def isFinished(situation):
         return True
     else:
         return is_winner(situation)
-        """
-        if get_color(situation, 0, 0) == get_color(situation, 0, 1) and get_color(situation, 0, 0) == get_color(situation, 0, 2):
-            return True
-        elif get_color(situation, 0, 0) == get_color(situation, 1, 1) and get_color(situation, 0, 0) == get_color(situation, 2, 2):
-            return True
-        elif get_color(situation, 0, 1) == get_color(situation, 1, 1) and get_color(situation, 0, 1) == get_color(situation, 2, 1):
-            return True
-        elif get_color(situation, 0, 2) == get_color(situation, 1, 1) and get_color(situation, 0, 2) == get_color(situation, 2, 0):
-            return True
-        elif get_color(situation, 1, 0) == get_color(situation, 1, 1) and get_color(situation, 1, 0) == get_color(situation, 1, 2):
-            return True
-        elif get_color(situation, 2, 0) == get_color(situation, 2, 1) and get_color(situation, 2, 0)== get_color(situation, 2, 2):
-            return True
-        elif get_color(situation, 0, 0) == get_color(situation, 1, 0) and get_color(situation, 0, 0) == get_color(situation, 2, 0):
-            return True
-        elif get_color(situation, 0, 2) == get_color(situation, 1, 2) and get_color(situation, 0, 2) == get_color(situation, 2, 2):
-            return True
-        else:
-            return False
-        """
 
 
 
