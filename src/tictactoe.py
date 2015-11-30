@@ -193,6 +193,20 @@ def coef(player):
     else:
         return 1
 
+def is_winner(situation):
+    finish_position = [[(0,0),(0,1),(0,2)],
+                       [(0,0),(1,1),(2,2)],
+                       [(0,1),(1,1),(2,1)],
+                       [(0,2),(1,1),(2,0)],
+                       [(1,0),(1,1),(1,2)],
+                       [(2,0),(2,1),(2,2)],
+                       [(0,0),(1,0),(2,0)],
+                       [(0,2),(1,2),(2,2)]]
+    for position in finish_position:
+        if get_color(situation, position[0][0],position[0][1]) == get_color(situation, position[1][0],position[1][1]) and get_color(situation, position[1][0],position[1][1]) == get_color(situation, position[2][0],position[2][1]) and not get_color(situation, position[1][0],position[1][1]) == None:
+            return True
+    return False
+
 
 ##### Predicates #####
 
@@ -211,6 +225,8 @@ def isFinished(situation):
     if get_nb_plays(game) == 9:
         return True
     else:
+        return is_winner(situation)
+        """
         if get_color(situation, 0, 0) == get_color(situation, 0, 1) and get_color(situation, 0, 0) == get_color(situation, 0, 2):
             return True
         elif get_color(situation, 0, 0) == get_color(situation, 1, 1) and get_color(situation, 0, 0) == get_color(situation, 2, 2):
@@ -229,6 +245,7 @@ def isFinished(situation):
             return True
         else:
             return False
+        """
 
 
 
