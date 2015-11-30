@@ -254,26 +254,32 @@ def coef(player):
     else:
         return 1
 
-def is_winner(situation):
-    """
-    Get true if the situation have a winner
 
-    :param situation: the game situation
-    :type situation: a game
-    :return: *Boolean* True if the situation have a winner
+def evalFunction(situation, player):
     """
-    finish_position = [[(0,0),(0,1),(0,2)],
-                       [(0,0),(1,1),(2,2)],
-                       [(0,1),(1,1),(2,1)],
-                       [(0,2),(1,1),(2,0)],
-                       [(1,0),(1,1),(1,2)],
-                       [(2,0),(2,1),(2,2)],
-                       [(0,0),(1,0),(2,0)],
-                       [(0,2),(1,2),(2,2)]]
-    for position in finish_position:
-        if get_color(situation, position[0][0],position[0][1]) == get_color(situation, position[1][0],position[1][1]) and get_color(situation, position[1][0],position[1][1]) == get_color(situation, position[2][0],position[2][1]) and not get_color(situation, position[1][0],position[1][1]) == None:
-            return True
-    return False
+    the evaluation function for the min-max algorithm. It evaluates the given situation, the evaluation function increases with the quality of the situation for the player
+         
+    :param situation: the current situation
+    :type situation: a game situation
+    :param player: the current player
+    :type player: player
+    :returns: *(number)* -- the score of the given situation for the given player.
+        The better the situation for the minmax player, the higher the score. The opposite for human player.
+    """
+    cells_pts = 0
+    dic_pts = {(0,0) : 0.75 , (0,1) : 0 , (0,2) : 0.75 ,
+               (1,0) : 0    , (1,1) : 1 , (1,2) : 0 ,
+               (2,0) : 0.75 , (2,1) : 0 , (2,1) : 0.75 }
+
+    for x_list in situation:
+        for cell in x_list:
+            print(cell)
+            if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
+                cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
+    if is_winner(situation) == True:
+        return 5*cell_pts*coef(player)
+    else:
+        return 1*cells_pts*coef(player)
 
 
 ##### Predicates #####
@@ -295,6 +301,26 @@ def isFinished(situation):
     else:
         return is_winner(situation)
 
+def is_winner(situation):
+    """
+    Get true if the situation have a winner
+
+    :param situation: the game situation
+    :type situation: a game
+    :return: *Boolean* True if the situation have a winner
+    """
+    finish_position = [[(0,0),(0,1),(0,2)],
+                       [(0,0),(1,1),(2,2)],
+                       [(0,1),(1,1),(2,1)],
+                       [(0,2),(1,1),(2,0)],
+                       [(1,0),(1,1),(1,2)],
+                       [(2,0),(2,1),(2,2)],
+                       [(0,0),(1,0),(2,0)],
+                       [(0,2),(1,2),(2,2)]]
+    for position in finish_position:
+        if get_color(situation, position[0][0],position[0][1]) == get_color(situation, position[1][0],position[1][1]) and get_color(situation, position[1][0],position[1][1]) == get_color(situation, position[2][0],position[2][1]) and not get_color(situation, position[1][0],position[1][1]) == None:
+            return True
+    return False
 
 
 def playerCanPlay(game, situation, player):
