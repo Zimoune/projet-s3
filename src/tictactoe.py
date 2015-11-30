@@ -249,7 +249,7 @@ def coef(player):
     :rtype: an integer
     """
     global game
-    if player == get_player1(game):
+    if player == get_player2(game):
         return -1
     else:
         return 1
