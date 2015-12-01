@@ -239,12 +239,16 @@ def humanPlayerPlays(game, player, situation):
     coord = input("Where would you play? x, y ")
     try:
         x,y = coord.split(',')
-        set_color(situation, int(x), int(y), Player.get_color(player))
-        return game
+        if not get_color(situation, int(x), int(y)) == None:
+            print("Case already used")
+            humanPlayerPlays(game, player, situation)
+        else:
+            set_color(situation, int(x), int(y), Player.get_color(player))
+            return game
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except:
-        print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
+        print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,2]")
         humanPlayerPlays(game,player,situation)
 
 
