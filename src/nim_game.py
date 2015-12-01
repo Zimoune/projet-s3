@@ -24,8 +24,9 @@
 
 import player as Player
 
-
 _DEFAULT_PEBBLES = 25
+
+game = {"player1" : "" , "player2" : ""}
 
 def initSituation(game):
     """builds the initial situation for the game.  
@@ -170,7 +171,7 @@ def _input_pebbles(player, number_pebbles, number_message):
     reads the number of pebbles taken by player
     :returns: *(int)* -- the number of taken pebbles
     """
-    print(Player.name(player)+" it's your turn, you can take "+number_message+" pebbles.")
+    print(Player.get_name(player)+" it's your turn, you can take "+number_message+" pebbles.")
     nb_taken_pebbles = input("how many pebbles do you take ? ")
     try:
         if int(nb_taken_pebbles) in number_pebbles:
@@ -210,3 +211,25 @@ def get_player2(game):
     :rtype: a player
     """
     return game['player2']
+
+def set_player1(player):
+    """
+    Set the player 1 for the game
+
+    :param player: the player 1 of the game
+    :type player: a player
+    :return: None
+    :sidegrid effect: set the player 1 of the game
+    """
+    game['player1'] = player
+
+def set_player2(player):
+    """
+    Set the player 2 for the game
+
+    :param player: the player 2 of the game
+    :type player: a player
+    :return: None
+    :sidegrid effect: set the player 2 of the game
+    """
+    game['player2'] = player

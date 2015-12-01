@@ -13,7 +13,7 @@ game = Game.make_game()
 
 
 
-##### Selectors #####
+##### Getters #####
 
 def get_player1(game):
     """
@@ -124,7 +124,7 @@ def getWinner(game, situation, player):
     else:
         return player
 
-##### Constructors #####
+##### Setters #####
 
 def set_color(situation, x, y, color):
     """
@@ -172,14 +172,6 @@ def initSituation(game_name):
     :type game: game
     :returns: *(situation)* the situation at the beginning of the game
     """
-    try:
-        set_player1(Player.create(input("name player 1: "), "cross"))
-        set_player2(Player.create(input("name player 2: "), "circle"))
-    except KeyboardInterrupt:
-        raise KeyboardInterrupt
-    except:
-        initSituation(game)
-    
     return get_grid(game)
 
 
@@ -244,7 +236,7 @@ def humanPlayerPlays(game, player, situation):
             humanPlayerPlays(game, player, situation)
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
-            return game
+            return situation
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except:
@@ -283,7 +275,6 @@ def evalFunction(situation, player):
     dic_pts = {(0,0) : 0.75 , (0,1) : 0 , (0,2) : 0.75 ,
                (1,0) : 0    , (1,1) : 1 , (1,2) : 0 ,
                (2,0) : 0.75 , (2,1) : 0 , (2,1) : 0.75 }
-
     for x_list in situation:
         for cell in x_list:
             print(cell)
