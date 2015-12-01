@@ -16,6 +16,7 @@ def play():
             currentPlayer = Game.get_player2(Game.game)
         else:
             currentPlayer = Game.get_player1(Game.game)
+        Game.displaySituation(situation)
         print(player.get_name(currentPlayer)," turn")
         Game.humanPlayerPlays(Game.game, currentPlayer, situation)
     winner = Game.getWinner(Game.game, situation, currentPlayer)
