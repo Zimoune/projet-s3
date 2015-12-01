@@ -203,7 +203,13 @@ def nextSituations(game, situation, player):
                 l_situations += [get_position(situation, x, y)]
     return l_situations
 
-
+def XorO(situation, x, y):
+    if get_color(situation, x, y)== None:
+        return ''
+    elif get_color(situation, x, y)=='cross':
+        return 'X'
+    else:
+        return 'O'
 
 def displaySituation(situation):
     """
@@ -212,8 +218,11 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-
-    pass
+    for i in range(3):
+        j = 0
+        print(" --- --- --- ")
+        print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
+    print(" --- --- --- ")
 
 def humanPlayerPlays(game, player, situation):
     """
