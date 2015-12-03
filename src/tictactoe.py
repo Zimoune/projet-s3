@@ -264,12 +264,12 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    for i in range(3):
+    for i in range(8):
         j = 0
-        print(" --- --- --- ")
+        print(" --- --- --- --- --- --- --- ---")
         print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
 
-    print(" --- --- --- ")
+    print(" --- --- --- --- --- --- --- ---")
 
 def humanPlayerPlays(game, player, situation):
     """

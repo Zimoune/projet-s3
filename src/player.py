@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-:mod:`joueur` module
+:mod:`player` module
 
 :author: `Simon Le Pallac & Lefebvre Ryan`
 

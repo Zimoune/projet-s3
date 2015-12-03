@@ -7,13 +7,13 @@ import othelloGame as Game
 #### default_game ####
 
 game = Game.make_game()
-colors = ["white","black"]
+color = ["white","black"]
 
 ######################
 
 
 
-##### Selectors #####
+##### Getters #####
 
 def get_player1(game):
     """
@@ -119,7 +119,7 @@ def get_grid_color(game, x, y):
     """
     return game['grid'][x][y]['color']
 
-##### Constructors #####
+##### Setters #####
 
 def set_color(situation, x, y, color):
     """
@@ -167,13 +167,6 @@ def initSituation(game_name):
     :type game: game
     :returns: *(situation)* the situation at the beginning of the game
     """
-    try:
-        set_player1(Player.create(input("name player 1: "), colors[0]))
-        set_player2(Player.create(input("name player 2: "), colors[1]))
-    except KeyboardInterrupt:
-        raise KeyboardInterrupt
-    except:
-        initSituation(game_name)
     global game
     set_color(get_grid(game), 4, 4 , 'white')
     set_color(get_grid(game), 5, 5 , 'white')
@@ -229,7 +222,7 @@ def catch_play(position, player):
                 x_neigh += delta_x
                 y_neigh += delta_y
                 position = (x_neigh, y_neigh)
-                if get_color(game['grid'], x_neigh + delta_x, y_neigh + delta_y ) == is_oposite_pawn(position):
+                if get_color(game['grid'], x_neigh + delta_x, y_neigh + delta_y ) == is_opposite_pawn(position):
                     return True
         else:
             pass
@@ -238,10 +231,10 @@ def catch_play(position, player):
 def is_opposite_pawn(position):
     global game
     color = get_color(get_grid(game), position[0], position[1])
-    if color == colors[0]:
-        return colors[1]
+    if color == color[0]:
+        return color[1]
     else:
-        return colors[0]
+        return color[0]
 
 
 def extremity_pos(situation):
@@ -280,7 +273,7 @@ def is_in_grid(position):
         return False
     
 
-def get_neighbors(x, y):
+def get_neighbors(situation, x, y):
     if  get_color(get_grid(game), x, y) == None:
         return get_cell(situation, x, y)
     else:
@@ -339,7 +332,24 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    raise NotImplementedError( "displaySituation must be defined to display the situation on the screen" )
+    #raise NotImplementedError( "displaySituation must be defined to display the situation on the screen" )
+    for i in range(3):
+        j = 0
+        print(" --- --- --- ")
+        print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
+
+    print(" --- --- --- ")
+
+
+def XorO(situation, x, y):
+    if get_color(situation, x, y) == None:
+        return ''
+
+    elif get_color(situation, x, y) == 'white':
+        return 'X'
+
+    else:
+        return 'O'
 
 
 def humanPlayerPlays(game, player, situation):

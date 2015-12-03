@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import player
-import minmax as IA
+#import minmax as ia
 
 currentPlayer = None
+
 
 def play():
 
     global currentPlayer
     global mod
-    game_name = "tictactoe"
+    game_name = "othello"
 
     if game_name == "nim":
         import nim_game as Game
@@ -23,8 +24,6 @@ def play():
     else:
         import tictactoe as Game
         mod = __import__("tictactoe")
-
-
     ask_players_names(Game.color)
     situation = Game.initSituation(game_name)
 
@@ -68,5 +67,5 @@ def ask_players_names(color):
     except:
         ask_players_names()
           
-#if __name__ == '__main__':
-    #play()
+if __name__ == '__main__':
+    play()
