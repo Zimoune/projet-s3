@@ -2,11 +2,12 @@
 
 import player as Player
 
-import tictactoeGame as Game
+import othelloGame as Game
 
 #### default_game ####
 
 game = Game.make_game()
+colors = ["white","black"]
 
 ######################
 
@@ -167,13 +168,18 @@ def initSituation(game_name):
     :returns: *(situation)* the situation at the beginning of the game
     """
     try:
-        set_player1(Player.create(input("name player 1: "), "cross"))
-        set_player2(Player.create(input("name player 2: "), "circle"))
+        set_player1(Player.create(input("name player 1: "), colors[0]))
+        set_player2(Player.create(input("name player 2: "), colors[1]))
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except:
-        initSituation(game)
-    
+        initSituation(game_name)
+    global game
+    set_color(get_grid(game), 4, 4 , 'white')
+    set_color(get_grid(game), 5, 5 , 'white')
+    set_color(get_grid(game), 4, 5 , 'black')
+    set_color(get_grid(game), 5, 4 , 'black')
+
     return get_grid(game)
 
 
@@ -201,10 +207,77 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    raise NotImplementedError( "playerCanPlay must be defined to determine whether player can play")
+    for position in extremity_pos(situation):
+        pass
+
+def catch_play(position, player):
+    x = position[0]
+    y = position[1]
+    global game
+    neighbors = [(x+1,y), (x+1,y+1), (x+1,y-1), (x,y+1), (x,y-1), (x-1,y-1), (x-1,y),(x-1, y+1)]
+    for neighbor in neighbors:
+        x_neigh = neighbor[0]
+        y_neigh = neighbor[1]
+        delta_x = x_neigh - x
+        delta_y = y_neigh - y
+        print((delta_x, delta_y))
+        if get_color(game['grid'], x_neigh, y_neigh) == is_opposite_pawn(position):
+            print(y_neigh + delta_y)
+            print(game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'])
+            while game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'] == is_opposite_pawn(position):
+                print("test")
+                x_neigh += delta_x
+                y_neigh += delta_y
+                position = (x_neigh, y_neigh)
+                if get_color(game['grid'], x_neigh + delta_x, y_neigh + delta_y ) == is_oposite_pawn(position):
+                    return True
+        else:
+            pass
+    return False
+
+def is_opposite_pawn(position):
+    global game
+    color = get_color(get_grid(game), position[0], position[1])
+    if color == colors[0]:
+        return colors[1]
+    else:
+        return colors[0]
+
 
 def extremity_pos(situation):
-    position_map = {}
+    position_list = []
+    for x_list in situation:
+        for cell in x_list:
+            if cell['color'] == None:
+                pass
+            else:
+                position_list = position_list + available_neighbors(cell)
+    return list(set(position_list))
+
+def available_neighbors(cell):
+    position_list = []
+    x = get_position_cell(cell)[0]
+    y = get_position_cell(cell)[1]
+    neighbors = [(x+1,y), (x+1,y+1), (x+1,y-1), (x,y+1), (x,y-1), (x-1,y-1), (x-1,y),(x-1, y+1)]
+    for neighbor in neighbors:
+        global game
+        x = neighbor[0]
+        y = neighbor[1]
+        grid = get_grid(game)
+        if not is_in_grid(neighbor) or get_color(grid, x, y) != None:
+            pass
+        else:
+            position_list = position_list+[get_position(grid, x, y)]
+    return position_list
+
+def get_position_cell(cell):
+    return cell['position']
+
+def is_in_grid(position):
+    if position[0] >= 0 and position[0] < 8 and position[1] >= 0 and position[1] < 8:
+        return True
+    else:
+        return False
     
 
 def get_neighbors(x, y):

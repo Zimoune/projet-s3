@@ -39,6 +39,7 @@ def initSituation(game):
     """
     if ('pebbles' in game):
         return game['pebbles']
+
     else:
         return _DEFAULT_PEBBLES
     
@@ -88,9 +89,11 @@ def nextSituations(game, situation, player):
     if situation >= 3:
         # taking 3 pebbles is possible
         result.append(situation-3)
+
     if situation >= 2:
         # taking 2 pebbles is possible
         result.append(situation-2)
+
     return next
 
 
@@ -113,6 +116,7 @@ def getWinner(game, situation, player):
     if situation == 1:
         # tie game
         return None
+
     else:
         # other player took last pebble, player wins
         return player
@@ -130,6 +134,7 @@ def evalFunction(situation, player):
     """
     if situation == 1:
         return 0*coef(player)
+
     else:
         return 1*coef(player)
 
@@ -161,9 +166,11 @@ def humanPlayerPlays(game, player, situation):
     if situation >= 2:
         number_pebbles = [2,3]
         number_message = "2 or 3"
+
     else:
         number_pebbles = [3]
         number_message = "3"
+
     return situation - _input_pebbles(player, number_pebbles, number_message)
 
 def _input_pebbles(player, number_pebbles, number_message):
@@ -173,13 +180,16 @@ def _input_pebbles(player, number_pebbles, number_message):
     """
     print(Player.get_name(player)+" it's your turn, you can take "+number_message+" pebbles.")
     nb_taken_pebbles = input("how many pebbles do you take ? ")
+
     try:
         if int(nb_taken_pebbles) in number_pebbles:
             return int(nb_taken_pebbles)
         # else : invalid input  : redo input
+
     except ValueError:
         # input is not an integer : redo input
         pass
+
     print("illegal play, you can only take "+number_message+" pebbles")
     return _input_pebbles(player,number_pebbles, number_message)
 
@@ -187,6 +197,7 @@ def _input_pebbles(player, number_pebbles, number_message):
 def coef(player):
     if player == get_player1(game):
         return -1
+
     else:
         return 1   
 

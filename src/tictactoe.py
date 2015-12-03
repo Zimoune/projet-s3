@@ -9,6 +9,8 @@ import tictactoeGame as Game
 
 game = Game.make_game()
 
+color = ["cross", "circle"]
+
 ######################
 
 
@@ -36,6 +38,16 @@ def get_player2(game):
     :rtype: a player
     """
     return game['player2']
+
+def get_inv_player(player):
+    global game
+    if player == get_player1(game):
+        return get_player2(game)
+    else:
+        return get_player1(game)
+
+def get_player_name(player):
+    player['name']
 
 def get_grid(game):
     """
@@ -103,6 +115,38 @@ def get_grid_color(game, x, y):
     :rtype: a string
     """
     return game['grid'][x][y]['color']
+
+def get_color_cell(cell):
+    """
+    get the color of a cell
+
+    :param cell: a cell of game
+    :type cell: a cell
+    :return: the cell's color
+    :rtype: string
+    """
+    global game
+    pos = cell['position']
+    return get_color(get_grid(game), pos[0], pos[1])
+
+def get_cell(situation, x, y):
+    """
+    Get the postion of a cell of the game
+    
+    :param situation: the grid situation
+    :type situation: list of lists
+    :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: a cell of game
+    :rtype: a cell
+    """
+    return situation[x][y]
+
+def get_position_cell(cell):
+    return cell['position']
+
 
 def getWinner(game, situation, player):
     """
@@ -176,7 +220,7 @@ def initSituation(game_name):
 
 
 
-def nextSituations(game, situation, player):
+def nextSituations(situation, player):
     """
     returns the list of situations that can be reached from given situation by the player in the game
 
@@ -189,17 +233,27 @@ def nextSituations(game, situation, player):
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
     l_situations = []
-    for x in range(3):
-        for y in range(3):
-            if get_color(situation, x, y) == None:
-                l_situations += [get_position(situation, x, y)]
+    for x_list in situation:
+        situation_line = []
+        for cell in x_list:
+            copy_situation = situation
+            x_cell = get_position_cell(cell)[0]
+            y_cell = get_position_cell(cell)[1]
+
+            if get_color_cell(cell) == None:
+                set_color(copy_situation, x_cell, y_cell, player['color'])
+                situation_line += copy_situation
+        l_situations.append(situation_line)
     return l_situations
+
 
 def XorO(situation, x, y):
     if get_color(situation, x, y)== None:
         return ''
+
     elif get_color(situation, x, y)=='cross':
         return 'X'
+
     else:
         return 'O'
 
@@ -214,6 +268,7 @@ def displaySituation(situation):
         j = 0
         print(" --- --- --- ")
         print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
+
     print(" --- --- --- ")
 
 def humanPlayerPlays(game, player, situation):
@@ -229,16 +284,21 @@ def humanPlayerPlays(game, player, situation):
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
     coord = input("Where would you play? x, y ")
+
     try:
         x,y = coord.split(',')
+
         if not get_color(situation, int(x), int(y)) == None:
             print("Case already used")
             humanPlayerPlays(game, player, situation)
+
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
             return situation
+
     except KeyboardInterrupt:
         raise KeyboardInterrupt
+
     except:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,2]")
         humanPlayerPlays(game,player,situation)
@@ -254,8 +314,10 @@ def coef(player):
     :rtype: an integer
     """
     global game
+
     if player == get_player2(game):
         return -1
+
     else:
         return 1
 
@@ -275,13 +337,18 @@ def evalFunction(situation, player):
     dic_pts = {(0,0) : 0.75 , (0,1) : 0 , (0,2) : 0.75 ,
                (1,0) : 0    , (1,1) : 1 , (1,2) : 0 ,
                (2,0) : 0.75 , (2,1) : 0 , (2,1) : 0.75 }
+
     for x_list in situation:
+
         for cell in x_list:
             print(cell)
+
             if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
                 cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
+
     if is_winner(situation) == True:
         return 5*cell_pts*coef(player)
+
     else:
         return 1*cells_pts*coef(player)
 
@@ -302,6 +369,7 @@ def isFinished(situation):
 
     if get_nb_plays(game) == 9:
         return True
+
     else:
         return is_winner(situation)
 
@@ -321,9 +389,12 @@ def is_winner(situation):
                        [(2,0),(2,1),(2,2)],
                        [(0,0),(1,0),(2,0)],
                        [(0,2),(1,2),(2,2)]]
+
     for position in finish_position:
+
         if get_color(situation, position[0][0],position[0][1]) == get_color(situation, position[1][0],position[1][1]) and get_color(situation, position[1][0],position[1][1]) == get_color(situation, position[2][0],position[2][1]) and not get_color(situation, position[1][0],position[1][1]) == None:
             return True
+
     return False
 
 
@@ -340,14 +411,14 @@ def playerCanPlay(game, situation, player):
     :returns: *(boolean)* -- True iff player can play in situation
     """
     for x in range(3):
+
         for y in range(3):
+
             if get_grid_color(game, x, y) != get_color(situation, x, y):
+
                 if get_grid_color(game, x, y) == None:
                     return True
+
                 else:
                     return False
     return False
-
-
-
-            
