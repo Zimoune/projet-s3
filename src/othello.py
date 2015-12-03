@@ -320,9 +320,20 @@ def getWinner(game, situation, player):
 
     :CU: situation is a final situation
     """
-    raise NotImplementedError( "getWinner function must be defined to tell who win the game" )    
-
-
+    nmb1 = 0
+    nmb2 = 0
+    for x in range(8):
+        for y in range(8):
+            if get_color(situation, x, y) == color[0]:
+                ++nmb1
+            elif get_color(situation, x, y) == color[1]:
+                ++nmb2
+    if nmb1 > nmb2:
+        return get_player1(game)
+    elif nmb1 == nmb2:
+        return None
+    else:
+        return get_player2(game)
 
 
 def displaySituation(situation):
@@ -332,7 +343,6 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    #raise NotImplementedError( "displaySituation must be defined to display the situation on the screen" )
     for i in range(3):
         j = 0
         print(" --- --- --- ")
