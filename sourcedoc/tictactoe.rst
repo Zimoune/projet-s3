@@ -1,10 +1,10 @@
 |today|
-------------
+-------
 Tictactoe
-------------
+---------
 
-Selector
-=========
+Getters
+=======
 
 .. autofunction:: tictactoe.get_player1
     :members:
@@ -23,8 +23,8 @@ Selector
 .. autofunction:: tictactoe.getWinner
     :members:
 
-Constructors
-==========
+Setters
+=======
 
 .. autofunction:: tictactoe.set_color
     :members:
@@ -34,7 +34,7 @@ Constructors
     :members:
 
 Game Management
-=============
+===============
 
 .. autofunction:: tictactoe.initSituation
     :members:
@@ -46,7 +46,7 @@ Game Management
     :members:
 
 Predicates
-========
+==========
 
 .. autofunction:: tictactoe.isFinished
     :members:

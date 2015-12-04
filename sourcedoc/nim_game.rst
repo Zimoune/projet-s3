@@ -1,16 +1,16 @@
 |today|
-------------
+-------
 Nim_game
-------------
+--------
 
-Selector
-=========
+Getters
+=======
 
 .. autofunction:: nimgame.getWinner
     :members:
 
 Game Management
-=============
+===============
 
 .. autofunction:: nimgame.initSituation
     :members:
@@ -26,7 +26,7 @@ Game Management
     :members:
 
 Predicates
-========
+==========
 
 .. autofunction:: nimgame.isFinished
     :members:

@@ -1,12 +1,12 @@
 back
 back: http://example.com/
 
----------------
- Projet S3
----------------
+---------
+Projet S3
+---------
 
 By : Lefebvre Ryan & Le Pallac Simon & Abdoulaye Chérif
-======================================
+=======================================================
 
 .. toctree::
    :maxdepth: 1

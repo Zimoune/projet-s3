@@ -1,6 +1,6 @@
---------
+------------
 Abstractgame
---------
+------------
 
 .. automodule:: abstractgame
    :members:

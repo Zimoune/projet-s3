@@ -1,21 +1,21 @@
 |today|
-------------
+-------
 Player
-------------
+------
 
 .. autofunction:: player.create
     :members:
 
-Selectors
-=========
+Getters
+=======
 
 .. autofunction:: player.get_name
     :members:
 .. autofunction:: player.get_color
     :members:
 
-Constructors
-=========
+Setters
+=======
 
 .. autofunction:: player.set_name
     :members:
