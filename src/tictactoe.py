@@ -233,17 +233,18 @@ def nextSituations(situation, player):
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
     l_situations = []
+    copy_situation = list(situation)
     for x_list in situation:
         situation_line = []
         for cell in x_list:
-            copy_situation = situation
             x_cell = get_position_cell(cell)[0]
             y_cell = get_position_cell(cell)[1]
 
             if get_color_cell(cell) == None:
                 set_color(copy_situation, x_cell, y_cell, player['color'])
-                situation_line += copy_situation
-        l_situations.append(situation_line)
+                l_situations.append(copy_situation)
+                set_color(copy_situation, x_cell, y_cell, "")
+                
     return l_situations
 
 
@@ -315,8 +316,8 @@ def coef(player):
     """
     global game
 
-    if player == get_player2(game):
-        return -1
+    if get_player_name(player) == "Minmax":
+        return 1
 
     else:
         return 1
@@ -347,7 +348,7 @@ def evalFunction(situation, player):
                 cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
 
     if is_winner(situation) == True:
-        return 5*cell_pts*coef(player)
+        return 5*cells_pts*coef(player)
 
     else:
         return 1*cells_pts*coef(player)
