@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import player
-#import minmax as ia
+import minmax as IA
 
 currentPlayer = None
 
@@ -11,7 +11,7 @@ def play():
 
     global currentPlayer
     global mod
-    game_name = "othello"
+    game_name = "nim"
 
     if game_name == "nim":
         import nim_game as Game
@@ -47,6 +47,7 @@ def play():
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
 
+        Game.game['nb_plays'] += 1
     winner = Game.getWinner(Game.game, situation, currentPlayer)
 
     if winner == None:

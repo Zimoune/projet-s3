@@ -200,8 +200,18 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    for position in extremity_pos(situation):
-        pass
+    for x in range(8):
+
+        for y in range(8):
+
+            if get_grid_color(game, x, y) != get_color(situation, x, y):
+
+                if get_position(situation, x, y) in extremity_pos(situation):
+
+                    if catch_play(get_position(situation, x, y), player):
+
+                        return True
+    return False
 
 def catch_play(position, player):
     x = position[0]
@@ -267,6 +277,13 @@ def get_position_cell(cell):
     return cell['position']
 
 def is_in_grid(position):
+    """"
+    Return True if the position is in the grid
+
+    :param position: a cell position
+    :type postion: a tuple
+    :return: *(Boolean)* -- True if position is in grid
+    """
     if position[0] >= 0 and position[0] < 8 and position[1] >= 0 and position[1] < 8:
         return True
     else:
@@ -274,6 +291,17 @@ def is_in_grid(position):
     
 
 def get_neighbors(situation, x, y):
+    """
+    get the neighbors of a cell
+
+    :param situation: the current situation
+    :type situation: a game situation
+    :param x: x's coordinate
+    :type x: a integer
+    :param y: y's coordinate
+    :type y: a integer
+    """
+    
     if  get_color(get_grid(game), x, y) == None:
         return get_cell(situation, x, y)
     else:
@@ -298,12 +326,7 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    l_situations = []
-    for x in range(8):
-        for y in range(8):
-            if get_color(situation, x, y) == None:
-                l_situations += [get_position(situation, x, y)]
-    return l_situations
+    pass
 
 
 def getWinner(game, situation, player):
@@ -323,15 +346,21 @@ def getWinner(game, situation, player):
     nmb1 = 0
     nmb2 = 0
     for x in range(8):
+
         for y in range(8):
+
             if get_color(situation, x, y) == color[0]:
-                ++nmb1
+                nmb1 += 1
+
             elif get_color(situation, x, y) == color[1]:
-                ++nmb2
+                nmb2 += 1
+
     if nmb1 > nmb2:
         return get_player1(game)
+
     elif nmb1 == nmb2:
         return None
+
     else:
         return get_player2(game)
 
@@ -343,23 +372,33 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    for i in range(3):
-        j = 0
+    for i in range(8):
         print(" --- --- --- ")
-        print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
+        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i)WorB(situation, 3, 7-i)
+                                                                        ,WorB(situation, 4, 7-i),WorB(situation, 5, 7-i),WorB(situation, 6, 7-i),WorB(situation, 7, 7-i)))
 
     print(" --- --- --- ")
 
 
-def XorO(situation, x, y):
+def WorB(situation, x, y):
+    """
+    Return the color's abbreviations of a cell
+
+    :param situation: the situation of the game
+    :type situation: a situation
+    :param x: x's coordinate
+    :type x: a integer
+    :param y: y's coordinate
+    :type y: a integer
+    """
     if get_color(situation, x, y) == None:
         return ''
 
     elif get_color(situation, x, y) == 'white':
-        return 'X'
+        return 'W'
 
     else:
-        return 'O'
+        return 'B'
 
 
 def humanPlayerPlays(game, player, situation):
@@ -375,12 +414,15 @@ def humanPlayerPlays(game, player, situation):
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
     coord = input("Where would you play? x, y ")
+
     try:
         x,y = coord.split(',')
         set_color(situation, int(x), int(y), Player.get_color(player))
         return game
+
     except KeyboardInterrupt:
         raise KeyboardInterrupt
+
     except:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
         humanPlayerPlays(game,player,situation)
@@ -395,8 +437,10 @@ def coef(player):
     :rtype: an integer
     """
     global game
-    if player == get_player2(game):
-        return -1
+
+    if get_player_name(player) == "Minmax":
+        return 1
+
     else:
         return 1
 

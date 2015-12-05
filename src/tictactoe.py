@@ -40,6 +40,14 @@ def get_player2(game):
     return game['player2']
 
 def get_inv_player(player):
+    """
+    Get the other player of the game
+
+    :param player: a game player
+    :type player: a player
+    :return: a game player
+    :rtype: a player
+    """
     global game
     if player == get_player1(game):
         return get_player2(game)
@@ -265,7 +273,7 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    for i in range(8):
+    for i in range(3):
         j = 0
         print(" --- --- --- --- --- --- --- ---")
         print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
