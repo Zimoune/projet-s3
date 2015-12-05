@@ -119,6 +119,52 @@ def get_grid_color(game, x, y):
     """
     return game['grid'][x][y]['color']
 
+def get_position_cell(cell):
+    """
+    Get the position of cell
+
+    :param cell: cell of game
+    :type cell: a cell
+    :return: a position cell
+    :rtype: a tuple
+    """
+    return cell['position']
+
+def getWinner(game, situation, player):
+    """
+    Gives the winner of the game that end in situation
+
+    :param game: the game 
+    :type game: game
+    :param situation: the situation which is a final game situation
+    :type situation: a game situation
+    :param player: the player who should have played if situation was not final (then other player plays previous turn)
+    :type player: player
+    :returns: *(player)* -- the winner player or None in case of tie game
+
+    :CU: situation is a final situation
+    """
+    nmb1 = 0
+    nmb2 = 0
+    for x in range(8):
+
+        for y in range(8):
+
+            if get_color(situation, x, y) == color[0]:
+                nmb1 += 1
+
+            elif get_color(situation, x, y) == color[1]:
+                nmb2 += 1
+
+    if nmb1 > nmb2:
+        return get_player1(game)
+
+    elif nmb1 == nmb2:
+        return None
+
+    else:
+        return get_player2(game)
+
 ##### Setters #####
 
 def set_color(situation, x, y, color):
@@ -187,58 +233,53 @@ def isFinished(situation):
     raise NotImplementedError( "isFinished must be defined as a function to test end of game" )
 
 
-
-def playerCanPlay(game, situation, player):
-    """
-    tells whether player can play in given situation
-
-    :param game: the game 
-    :type game: game
-    :param situation: the situation to display
-    :type situation: a game situation
-    :param player: the player
-    :type player: player
-    :returns: *(boolean)* -- True iff player can play in situation
-    """
-    for x in range(8):
-
-        for y in range(8):
-
-            if get_grid_color(game, x, y) != get_color(situation, x, y):
-
-                if get_position(situation, x, y) in extremity_pos(situation):
-
-                    if catch_play(get_position(situation, x, y), player):
-
-                        return True
-    return False
-
 def catch_play(position, player):
+#Non testé il me semble
+    """
+    Get True if a position is a catch play for a player
+
+    :param position: a position
+    :type position: a tuple
+    :param player: a game player
+    :type player: a player
+    :return: *(Boolean)* --True if the position is a catch play
+    """
+    global game
     x = position[0]
     y = position[1]
-    global game
     neighbors = [(x+1,y), (x+1,y+1), (x+1,y-1), (x,y+1), (x,y-1), (x-1,y-1), (x-1,y),(x-1, y+1)]
+
     for neighbor in neighbors:
         x_neigh = neighbor[0]
         y_neigh = neighbor[1]
         delta_x = x_neigh - x
         delta_y = y_neigh - y
         print((delta_x, delta_y))
+
         if get_color(game['grid'], x_neigh, y_neigh) == is_opposite_pawn(position):
             print(y_neigh + delta_y)
             print(game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'])
+
             while game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'] == is_opposite_pawn(position):
                 print("test")
                 x_neigh += delta_x
                 y_neigh += delta_y
                 position = (x_neigh, y_neigh)
+
                 if get_color(game['grid'], x_neigh + delta_x, y_neigh + delta_y ) == is_opposite_pawn(position):
                     return True
-        else:
-            pass
+
     return False
 
 def is_opposite_pawn(position):
+    """
+    Get the opposite color of a position cell
+
+    :param position: a position
+    :type position: a tuple
+    :return: a color
+    :rtype: a string
+    """
     global game
     color = get_color(get_grid(game), position[0], position[1])
     if color == color[0]:
@@ -248,6 +289,14 @@ def is_opposite_pawn(position):
 
 
 def extremity_pos(situation):
+    """
+    Get the extremity position of the situation
+
+    :param situation: a game situation
+    :type situation: list of list
+    :return: the extremity position
+    :rtype: list of tuple
+    """
     position_list = []
     for x_list in situation:
         for cell in x_list:
@@ -258,6 +307,14 @@ def extremity_pos(situation):
     return list(set(position_list))
 
 def available_neighbors(cell):
+    """
+    Get a position list of available neighbor of cell
+
+    :param cell: cell of game
+    :type cell: a cell
+    :return: a list of available neighbors
+    :rtype: a list
+    """
     position_list = []
     x = get_position_cell(cell)[0]
     y = get_position_cell(cell)[1]
@@ -273,46 +330,6 @@ def available_neighbors(cell):
             position_list = position_list+[get_position(grid, x, y)]
     return position_list
 
-def get_position_cell(cell):
-    return cell['position']
-
-def is_in_grid(position):
-    """"
-    Return True if the position is in the grid
-
-    :param position: a cell position
-    :type postion: a tuple
-    :return: *(Boolean)* -- True if position is in grid
-    """
-    if position[0] >= 0 and position[0] < 8 and position[1] >= 0 and position[1] < 8:
-        return True
-    else:
-        return False
-    
-
-def get_neighbors(situation, x, y):
-    """
-    get the neighbors of a cell
-
-    :param situation: the current situation
-    :type situation: a game situation
-    :param x: x's coordinate
-    :type x: a integer
-    :param y: y's coordinate
-    :type y: a integer
-    """
-    
-    if  get_color(get_grid(game), x, y) == None:
-        return get_cell(situation, x, y)
-    else:
-        extremity_pos(x+1, y+1)
-        extremity_pos(x+1, y)
-        extremity_pos(x+1, y-1)
-        extremity_pos(x, y+1)
-        extremity_pos(x, y-1)
-        extremity_pos(x-1, y+1)
-        extremity_pos(x-1, y)
-        extremity_pos(x-1, y-1)
 
 def nextSituations(game, situation, player):
     """
@@ -327,42 +344,6 @@ def nextSituations(game, situation, player):
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
     pass
-
-
-def getWinner(game, situation, player):
-    """
-    Gives the winner of the game that end in situation
-
-    :param game: the game 
-    :type game: game
-    :param situation: the situation which is a final game situation
-    :type situation: a game situation
-    :param player: the player who should have played if situation was not final (then other player plays previous turn)
-    :type player: player
-    :returns: *(player)* -- the winner player or None in case of tie game
-
-    :CU: situation is a final situation
-    """
-    nmb1 = 0
-    nmb2 = 0
-    for x in range(8):
-
-        for y in range(8):
-
-            if get_color(situation, x, y) == color[0]:
-                nmb1 += 1
-
-            elif get_color(situation, x, y) == color[1]:
-                nmb2 += 1
-
-    if nmb1 > nmb2:
-        return get_player1(game)
-
-    elif nmb1 == nmb2:
-        return None
-
-    else:
-        return get_player2(game)
 
 
 def displaySituation(situation):
@@ -444,4 +425,47 @@ def coef(player):
     else:
         return 1
 
+##### Predicates #####
+
+
+
+def is_in_grid(position):
+    """"
+    Return True if the position is in the grid
+
+    :param position: a cell position
+    :type postion: a tuple
+    :return: *(Boolean)* -- True if position is in grid
+    """
+    if position[0] >= 0 and position[0] < 8 and position[1] >= 0 and position[1] < 8:
+        return True
+    else:
+        return False
+
+
+def playerCanPlay(game, situation, player):
+    """
+    tells whether player can play in given situation
+
+    :param game: the game 
+    :type game: game
+    :param situation: the situation to display
+    :type situation: a game situation
+    :param player: the player
+    :type player: player
+    :returns: *(boolean)* -- True iff player can play in situation
+    """
+    for x in range(8):
+
+        for y in range(8):
+
+            if get_grid_color(game, x, y) != get_color(situation, x, y):
+
+                if get_position(situation, x, y) in extremity_pos(situation):
+
+                    if catch_play(get_position(situation, x, y), player):
+
+                        return True
+
+    return False
 
