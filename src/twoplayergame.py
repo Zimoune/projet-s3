@@ -3,9 +3,9 @@
 
 import player as Player
 import minmax as IA
+import sys
 
 currentPlayer = None
-
 
 def play():
 

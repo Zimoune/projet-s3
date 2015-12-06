@@ -245,13 +245,10 @@ def nextSituations(situation, player):
         for cell in x_list:
             x_cell = get_position_cell(cell)[0]
             y_cell = get_position_cell(cell)[1]
-            print(x_cell, " ", y_cell)
             copy_situation = copy.deepcopy(situation)
             if get_color_cell(cell) == None:
                 set_color(copy_situation, x_cell, y_cell, player['color'])
                 l_situations.append(copy_situation)
-    for situ in l_situations:
-        displaySituation(situ)
 
     return l_situations
 

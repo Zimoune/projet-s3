@@ -27,6 +27,9 @@ def get_player1(game):
     """
     return game['player1']
 
+def get_player_name(player):
+    return player['name']
+
 def get_player2(game):
     """
     Get the player two of the game
@@ -263,15 +266,13 @@ def catch_play(position, player):
         y_neigh = neighbor[1]
         delta_x = x_neigh - x
         delta_y = y_neigh - y
-        
-        if get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
 
-            while get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
-                x_neigh += delta_x
-                y_neigh += delta_y
+        while get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
+            x_neigh += delta_x
+            y_neigh += delta_y
 
-                if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
-                    return True
+            if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
+                return True
 
     return False
 
@@ -318,7 +319,7 @@ def available_neighbors(cell):
     return position_list
 
 
-def nextSituations(game, situation, player):
+def nextSituations(situation, player):
     """
     returns the list of situations that can be reached from given situation by the player in the game
 
@@ -330,8 +331,18 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    pass
+    l_situations = []
+    for x_list in situation:
+        for cell in x_list:
+            x_cell = get_position_cell(cell)[0]
+            y_cell = get_position_cell(cell)[1]
+            copy_situation = copy.deepcopy(situation)
+            for position in extremity_pos(situation):
+                if catch_play(position, player):
+                    set_color(copy_situation, x_cell, y_cell, player['color'])
+                    l_situations.append(copy_situation)
 
+    return l_situations
 
 def displaySituation(situation):
     """
