@@ -234,7 +234,6 @@ def isFinished(situation):
 
 
 def catch_play(position, player):
-#Non testé il me semble
     """
     Get True if a position is a catch play for a player
 
@@ -254,39 +253,17 @@ def catch_play(position, player):
         y_neigh = neighbor[1]
         delta_x = x_neigh - x
         delta_y = y_neigh - y
-        print((delta_x, delta_y))
 
-        if get_color(game['grid'], x_neigh, y_neigh) == is_opposite_pawn(position):
-            print(y_neigh + delta_y)
-            print(game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'])
+        if get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
 
-            while game['grid'][x_neigh + delta_x][y_neigh + delta_y]['color'] == is_opposite_pawn(position):
-                print("test")
+            while get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
                 x_neigh += delta_x
                 y_neigh += delta_y
-                position = (x_neigh, y_neigh)
 
-                if get_color(game['grid'], x_neigh + delta_x, y_neigh + delta_y ) == is_opposite_pawn(position):
+                if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
                     return True
 
     return False
-
-def is_opposite_pawn(position):
-    """
-    Get the opposite color of a position cell
-
-    :param position: a position
-    :type position: a tuple
-    :return: a color
-    :rtype: a string
-    """
-    global game
-    color = get_color(get_grid(game), position[0], position[1])
-    if color == color[0]:
-        return color[1]
-    else:
-        return color[0]
-
 
 def extremity_pos(situation):
     """
@@ -355,7 +332,7 @@ def displaySituation(situation):
     """
     for i in range(8):
         print(" --- --- --- ")
-        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i)WorB(situation, 3, 7-i)
+        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i),WorB(situation, 3, 7-i)
                                                                         ,WorB(situation, 4, 7-i),WorB(situation, 5, 7-i),WorB(situation, 6, 7-i),WorB(situation, 7, 7-i)))
 
     print(" --- --- --- ")
