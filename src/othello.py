@@ -4,6 +4,8 @@ import player as Player
 
 import othelloGame as Game
 
+import copy
+
 #### default_game ####
 
 game = Game.make_game()
@@ -351,12 +353,12 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    for i in range(3):
-        print(" --- --- --- ")
+    for i in range(8):
+        print(" --- --- --- --- --- --- --- --- ")
         print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i),WorB(situation, 3, 7-i)
                                                                         ,WorB(situation, 4, 7-i),WorB(situation, 5, 7-i),WorB(situation, 6, 7-i),WorB(situation, 7, 7-i)))
 
-    print(" --- --- --- ")
+    print(" --- --- --- --- --- --- --- --- ")
 
 
 def WorB(situation, x, y):
