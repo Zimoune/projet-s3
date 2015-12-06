@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import player as Player
+import copy
 
 import tictactoeGame as Game
 
@@ -227,7 +228,6 @@ def initSituation(game_name):
     return get_grid(game)
 
 
-
 def nextSituations(situation, player):
     """
     returns the list of situations that can be reached from given situation by the player in the game
@@ -241,18 +241,18 @@ def nextSituations(situation, player):
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
     l_situations = []
-    copy_situation = list(situation)
     for x_list in situation:
-        situation_line = []
         for cell in x_list:
             x_cell = get_position_cell(cell)[0]
             y_cell = get_position_cell(cell)[1]
-
+            print(x_cell, " ", y_cell)
+            copy_situation = copy.deepcopy(situation)
             if get_color_cell(cell) == None:
                 set_color(copy_situation, x_cell, y_cell, player['color'])
                 l_situations.append(copy_situation)
-                set_color(copy_situation, x_cell, y_cell, "")
-                
+    for situ in l_situations:
+        displaySituation(situ)
+
     return l_situations
 
 
@@ -275,10 +275,10 @@ def displaySituation(situation):
     """
     for i in range(3):
         j = 0
-        print(" --- --- --- --- --- --- --- ---")
+        print(" --- --- --- ")
         print('|{:^3}|{:^3}|{:^3}|'.format(XorO(situation, j, 2-i),XorO(situation, j+1, 2-i),XorO(situation, j+2, 2-i)))
 
-    print(" --- --- --- --- --- --- --- ---")
+    print(" --- --- --- ")
 
 def humanPlayerPlays(game, player, situation):
     """
@@ -381,6 +381,7 @@ def isFinished(situation):
 
     else:
         return is_winner(situation)
+
 
 def is_winner(situation):
     """
