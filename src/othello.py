@@ -215,10 +215,10 @@ def initSituation(game_name):
     :returns: *(situation)* the situation at the beginning of the game
     """
     global game
+    set_color(get_grid(game), 3, 3 , 'white')
     set_color(get_grid(game), 4, 4 , 'white')
-    set_color(get_grid(game), 5, 5 , 'white')
-    set_color(get_grid(game), 4, 5 , 'black')
-    set_color(get_grid(game), 5, 4 , 'black')
+    set_color(get_grid(game), 3, 4 , 'black')
+    set_color(get_grid(game), 4, 3 , 'black')
 
     return get_grid(game)
 
@@ -263,7 +263,7 @@ def catch_play(position, player):
         y_neigh = neighbor[1]
         delta_x = x_neigh - x
         delta_y = y_neigh - y
-
+        
         if get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
 
             while get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
@@ -441,7 +441,7 @@ def evalFunction(situation, player):
             if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
                 cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
 
-    if is_winner(situation) == True:
+    if isFinished(situation) == True:
         return 5*cells_pts*coef(player)
 
     else:
