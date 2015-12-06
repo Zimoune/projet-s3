@@ -55,7 +55,7 @@ def get_inv_player(player):
         return get_player1(game)
 
 def get_player_name(player):
-    player['name']
+    return player['name']
 
 def get_grid(game):
     """
