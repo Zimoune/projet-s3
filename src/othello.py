@@ -230,7 +230,16 @@ def isFinished(situation):
     :type situation: a game situation
     :returns: *(boolean)* -- True if the given situation ends the game
     """
-    raise NotImplementedError( "isFinished must be defined as a function to test end of game" )
+    global game
+    if get_nb_plays(game) == 60:
+        return True
+    players = [get_player1(game), get_player2(game)]
+    for player in players:
+        for position in extremity_pos(get_grid(game)):
+            if catch_play(position, player):
+                return False
+    return True
+        
 
 
 def catch_play(position, player):
@@ -330,7 +339,7 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    for i in range(8):
+    for i in range(3):
         print(" --- --- --- ")
         print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i),WorB(situation, 3, 7-i)
                                                                         ,WorB(situation, 4, 7-i),WorB(situation, 5, 7-i),WorB(situation, 6, 7-i),WorB(situation, 7, 7-i)))
