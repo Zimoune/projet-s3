@@ -11,7 +11,7 @@ def play():
 
     global currentPlayer
     global mod
-    game_name = "tictactoe"
+    game_name = "othello"
 
     if game_name == "nim":
         import nim_game as Game
@@ -20,6 +20,7 @@ def play():
     elif game_name == "othello":
         import othello as Game
         mod = __import__("othello")
+        print("othello")
 
     else:
         import tictactoe as Game
@@ -37,7 +38,7 @@ def play():
 
         else:
             currentPlayer = Game.get_player1(Game.game)
-
+        print(situation)
         Game.displaySituation(situation)
         print(Player.get_name(currentPlayer)," turn")
 

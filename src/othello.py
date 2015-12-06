@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import player as Player
+import copy
 
 import othelloGame as Game
 
 import copy
 
 #### default_game ####
-
 game = Game.make_game()
 
-color = ["white","black"]
+color = ["white", "black"]
 
 ######################
 
@@ -43,7 +43,8 @@ def get_player2(game):
     """
     return game['player2']
 
-def get_grid(game):
+def get_grid(
+game):
     """
     Get the grid of the game
     
@@ -268,14 +269,13 @@ def catch_play(position, player):
         y_neigh = neighbor[1]
         delta_x = x_neigh - x
         delta_y = y_neigh - y
-
-        while get_color(game['grid'], x_neigh, y_neigh) != player['color'] and get_color(game['grid'], x_neigh, y_neigh) != None:
+        while is_in_grid((x_neigh, y_neigh)) and get_color(game['grid'], x_neigh, y_neigh) != player['color'] \
+                and get_color(game['grid'], x_neigh, y_neigh) != None:
             x_neigh += delta_x
             y_neigh += delta_y
-
-            if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
-                return True
-
+            if is_in_grid((x_neigh, y_neigh)):
+                if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
+                    return True
     return False
 
 def extremity_pos(situation):
@@ -398,14 +398,20 @@ def humanPlayerPlays(game, player, situation):
 
     try:
         x,y = coord.split(',')
-        set_color(situation, int(x), int(y), Player.get_color(player))
-        return game
+
+        if not get_color(situation, int(x), int(y)) == None:
+            print("Case already used")
+            humanPlayerPlays(game, player, situation)
+
+        else:
+            set_color(situation, int(x), int(y), Player.get_color(player))
+            return situation
 
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
     except:
-        print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
+        print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,7]")
         humanPlayerPlays(game,player,situation)
 
 def coef(player):
@@ -492,16 +498,8 @@ def playerCanPlay(game, situation, player):
     :returns: *(boolean)* -- True iff player can play in situation
     """
     for x in range(8):
-
         for y in range(8):
-
             if get_grid_color(game, x, y) != get_color(situation, x, y):
-
                 if get_position(situation, x, y) in extremity_pos(situation):
-
-                    if catch_play(get_position(situation, x, y), player):
-
-                        return True
-
+                    return catch_play(get_position(situation, x, y), player)
     return False
-
