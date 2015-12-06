@@ -375,7 +375,7 @@ def isFinished(situation):
     :type nb_plays: a integer
     :returns: *(boolean)* -- True if the given situation ends the game
     """
-
+    global game
     if get_nb_plays(game) == 9:
         return True
 
