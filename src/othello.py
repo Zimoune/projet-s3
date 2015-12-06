@@ -402,6 +402,42 @@ def coef(player):
     else:
         return 1
 
+def evalFunction(situation, player):
+    """
+    the evaluation function for the min-max algorithm. It evaluates the given situation, the evaluation function increases with the quality of the situation for the player
+         
+    :param situation: the current situation
+    :type situation: a game situation
+    :param player: the current player
+    :type player: player
+    :returns: *(number)* -- the score of the given situation for the given player.
+        The better the situation for the minmax player, the higher the score. The opposite for human player.
+    """
+    cells_pts = 0
+    dic_pts = {(0,0) : 2 , (0,1) : 0.75 , (0,2) : 0.75 , (0,3) : 0.75 , (0,4) : 0.75 , (0,5) : 0.75 , (0,6) : 0.75 , (0,7) : 2,
+               (1,0) : 0.75 , (1,1) : 0 , (1,2) : 0 , (1,3) : 0 , (1,4) : 0 , (1,5) : 0 , (1,6) : 0 , (1,7) : 0.75,
+               (2,0) : 0.75 , (2,1) : 0 , (2,2) : 0 , (2,3) : 0 , (2,4) : 0 , (2,5) : 0 , (2,6) : 0 , (2,7) : 0.75,
+               (3,0) : 0.75 , (3,1) : 0 , (3,2) : 0 , (3,3) : 0 , (3,4) : 0 , (3,5) : 0 , (3,6) : 0 , (3,7) : 0.75,
+               (4,0) : 0.75 , (4,1) : 0 , (4,2) : 0 , (4,3) : 0 , (4,4) : 0 , (4,5) : 0 , (4,6) : 0 , (4,7) : 0.75,
+               (5,0) : 0.75 , (5,1) : 0 , (5,2) : 0 , (5,3) : 0 , (5,4) : 0 , (5,5) : 0 , (5,6) : 0 , (5,7) : 0.75,
+               (6,0) : 0.75 , (6,1) : 0 , (6,2) : 0 , (6,3) : 0 , (6,4) : 0 , (6,5) : 0 , (6,6) : 0 , (6,7) : 0.75,
+               (7,0) : 2 , (7,1) : 0.75 , (7,2) : 0.75 , (7,3) : 0.75 , (7,4) : 0.75 , (7,5) : 0.75 , (7,6) : 0.75 , (7,7) : 2, 
+               }
+
+    for x_list in situation:
+
+        for cell in x_list:
+
+            if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
+                cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
+
+    if is_winner(situation) == True:
+        return 5*cells_pts*coef(player)
+
+    else:
+        return 1*cells_pts*coef(player)
+
+
 ##### Predicates #####
 
 
