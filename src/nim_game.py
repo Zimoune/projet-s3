@@ -26,7 +26,7 @@ import player as Player
 
 _DEFAULT_PEBBLES = 25
 
-game = {"player1" : "" , "player2" : ""}
+game = {"player1" : "" , "player2" : "", "nb_plays":0}
 
 color = ['','']
 
