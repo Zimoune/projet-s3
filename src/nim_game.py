@@ -28,6 +28,8 @@ _DEFAULT_PEBBLES = 25
 
 game = {"player1" : "" , "player2" : ""}
 
+color = ['','']
+
 def initSituation(game):
     """builds the initial situation for the game.  
     A Nim game situation is simply defined by a number : the number of pebbles on the table.
@@ -71,7 +73,7 @@ def playerCanPlay(game, situation, player):
     return True
 
 
-def nextSituations(game, situation, player):
+def nextSituations(situation, player):
     """
     returns the list of situations that can be reached from given situation by the player in the game
 
@@ -85,7 +87,7 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    next = []
+    result = []
     if situation >= 3:
         # taking 3 pebbles is possible
         result.append(situation-3)
@@ -94,7 +96,7 @@ def nextSituations(game, situation, player):
         # taking 2 pebbles is possible
         result.append(situation-2)
 
-    return next
+    return result
 
 
 
@@ -244,3 +246,18 @@ def set_player2(player):
     :sidegrid effect: set the player 2 of the game
     """
     game['player2'] = player
+
+def get_inv_player(player):
+    """
+    Get the other player of the game
+
+    :param player: a game player
+    :type player: a player
+    :return: a game player
+    :rtype: a player
+    """
+    global game
+    if player == get_player1(game):
+        return get_player2(game)
+    else:
+        return get_player1(game)

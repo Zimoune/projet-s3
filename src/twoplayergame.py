@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import player
+import player as Player
 import minmax as IA
 
 currentPlayer = None
@@ -11,7 +11,7 @@ def play():
 
     global currentPlayer
     global mod
-    game_name = "nim"
+    game_name = "tictactoe"
 
     if game_name == "nim":
         import nim_game as Game
@@ -39,7 +39,7 @@ def play():
             currentPlayer = Game.get_player1(Game.game)
 
         Game.displaySituation(situation)
-        print(player.get_name(currentPlayer)," turn")
+        print(Player.get_name(currentPlayer)," turn")
 
         if currentPlayer['name'] == "Minmax":
             situation = IA.min_max1(situation, currentPlayer)
@@ -59,8 +59,8 @@ def play():
 
 def ask_players_names(color):
     try:
-        mod.set_player1(player.create(input("name player 1: "), color[0]))
-        mod.set_player2(player.create(input("name player 2: "), color[1]))
+        mod.set_player1(Player.create(input("name player 1: "), color[0]))
+        mod.set_player2(Player.create(input("name player 2: "), color[1]))
 
     except KeyboardInterrupt:
         raise KeyboardInterrupt

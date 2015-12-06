@@ -7,6 +7,7 @@ import othelloGame as Game
 #### default_game ####
 
 game = Game.make_game()
+
 color = ["white","black"]
 
 ######################
