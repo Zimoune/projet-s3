@@ -1,7 +1,7 @@
 |today|
----------------
+-------
 OthelloGame
----------------
+-----------
 
 
 .. automodule:: othelloGame

@@ -1,7 +1,7 @@
 |today|
-------------------
+-------
 Twoplayergame
-------------------
+-------------
 
 
 .. automodule:: txoplayergame
