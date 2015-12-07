@@ -325,7 +325,7 @@ def coef(player):
         return 1
 
     else:
-        return 1
+        return -1
 
 
 def evalFunction(situation, player):

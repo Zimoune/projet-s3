@@ -4,14 +4,13 @@
 import player as Player
 import minmax as IA
 import sys
-
+import sys
 currentPlayer = None
 
 
-def play():
+def play(game_name):
     global currentPlayer
     global mod
-    game_name = "othello"
 
     if game_name == "nim":
         import nim_game as Game
@@ -42,7 +41,7 @@ def play():
         print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
-            situation = IA.min_max1(situation, currentPlayer)
+            situation = IA.min_max1(game_name, situation, currentPlayer)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
@@ -75,4 +74,5 @@ def ask_players_names(color):
 
 
 if __name__ == '__main__':
-    play()
+    game_name = "tictactoe"
+    play(game_name)

@@ -1,7 +1,6 @@
 
 
-def min_max1(situation, player):
-    game_name = "nim"
+def min_max1(game_name, situation, player):
 
     if game_name == "nim":
         import nim_game as Game
@@ -22,10 +21,10 @@ def min_max1(situation, player):
     else:
         nextSituations = Game.nextSituations(situation, player)
         if Game.coef(player) == 1:
-            return max([(min_max1(nextSit, Game.get_inv_player(player))[1], nextSit) for nextSit in nextSituations])
+            return max([(min_max1(game_name, nextSit, Game.get_inv_player(player))[1], nextSit) for nextSit in nextSituations])
         else:
 
-            return min([(min_max1(nextSit, Game.get_inv_player(player))[1], nextSit) for nextSit in nextSituations])
+            return min([(min_max1(game_name, nextSit, Game.get_inv_player(player))[1], nextSit) for nextSit in nextSituations])
             
 def min_max2(situation, player, depht):
     game_name = "nim"
