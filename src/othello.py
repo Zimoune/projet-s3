@@ -2,15 +2,14 @@
 
 import player as Player
 import copy
-
 import othelloGame as Game
-
 import copy
 
 #### default_game ####
 game = Game.make_game()
 
 color = ["white", "black"]
+
 
 ######################
 
@@ -29,8 +28,10 @@ def get_player1(game):
     """
     return game['player1']
 
+
 def get_player_name(player):
     return player['name']
+
 
 def get_player2(game):
     """
@@ -43,8 +44,8 @@ def get_player2(game):
     """
     return game['player2']
 
-def get_grid(
-game):
+
+def get_grid(game):
     """
     Get the grid of the game
     
@@ -54,6 +55,7 @@ game):
     :rtype: a grid
     """
     return game['grid']
+
 
 def get_nb_plays(game):
     """
@@ -65,6 +67,7 @@ def get_nb_plays(game):
     :rtype: a integer
     """
     return game['nb_plays']
+
 
 def get_color(situation, x, y):
     """
@@ -81,6 +84,7 @@ def get_color(situation, x, y):
     """
     return situation[x][y]['color']
 
+
 def get_cell(situation, x, y):
     """
     Get the postion of a cell of the game
@@ -95,6 +99,7 @@ def get_cell(situation, x, y):
     :rtype: a cell
     """
     return situation[x][y]
+
 
 def get_position(situation, x, y):
     """
@@ -111,6 +116,7 @@ def get_position(situation, x, y):
     """
     return situation[x][y]['position']
 
+
 def get_grid_color(game, x, y):
     """
     Get the color of a cell of the game
@@ -126,6 +132,7 @@ def get_grid_color(game, x, y):
     """
     return game['grid'][x][y]['color']
 
+
 def get_position_cell(cell):
     """
     Get the position of cell
@@ -136,6 +143,7 @@ def get_position_cell(cell):
     :rtype: a tuple
     """
     return cell['position']
+
 
 def getWinner(game, situation, player):
     """
@@ -172,6 +180,7 @@ def getWinner(game, situation, player):
     else:
         return get_player2(game)
 
+
 ##### Setters #####
 
 def set_color(situation, x, y, color):
@@ -189,6 +198,7 @@ def set_color(situation, x, y, color):
     """
     situation[x][y]['color'] = color
 
+
 def set_player1(player):
     """
     Set the player 1 for the game
@@ -199,6 +209,7 @@ def set_player1(player):
     :sidegrid effect: set the player 1 of the game
     """
     game['player1'] = player
+
 
 def set_player2(player):
     """
@@ -211,6 +222,7 @@ def set_player2(player):
     """
     game['player2'] = player
 
+
 ##### Game Management #####
 
 def initSituation(game_name):
@@ -221,10 +233,10 @@ def initSituation(game_name):
     :returns: *(situation)* the situation at the beginning of the game
     """
     global game
-    set_color(get_grid(game), 3, 3 , 'white')
-    set_color(get_grid(game), 4, 4 , 'white')
-    set_color(get_grid(game), 3, 4 , 'black')
-    set_color(get_grid(game), 4, 3 , 'black')
+    set_color(get_grid(game), 3, 3, 'white')
+    set_color(get_grid(game), 4, 4, 'white')
+    set_color(get_grid(game), 3, 4, 'black')
+    set_color(get_grid(game), 4, 3, 'black')
 
     return get_grid(game)
 
@@ -246,7 +258,6 @@ def isFinished(situation):
             if catch_play(position, player):
                 return False
     return True
-        
 
 
 def catch_play(position, player):
@@ -262,7 +273,8 @@ def catch_play(position, player):
     global game
     x = position[0]
     y = position[1]
-    neighbors = [(x+1,y), (x+1,y+1), (x+1,y-1), (x,y+1), (x,y-1), (x-1,y-1), (x-1,y),(x-1, y+1)]
+    neighbors = [(x + 1, y), (x + 1, y + 1), (x + 1, y - 1), (x, y + 1), (x, y - 1), (x - 1, y - 1), (x - 1, y),
+                 (x - 1, y + 1)]
 
     for neighbor in neighbors:
         x_neigh = neighbor[0]
@@ -277,6 +289,7 @@ def catch_play(position, player):
                 if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
                     return True
     return False
+
 
 def extremity_pos(situation):
     """
@@ -296,6 +309,7 @@ def extremity_pos(situation):
                 position_list = position_list + available_neighbors(cell)
     return list(set(position_list))
 
+
 def available_neighbors(cell):
     """
     Get a position list of available neighbor of cell
@@ -308,7 +322,8 @@ def available_neighbors(cell):
     position_list = []
     x = get_position_cell(cell)[0]
     y = get_position_cell(cell)[1]
-    neighbors = [(x+1,y), (x+1,y+1), (x+1,y-1), (x,y+1), (x,y-1), (x-1,y-1), (x-1,y),(x-1, y+1)]
+    neighbors = [(x + 1, y), (x + 1, y + 1), (x + 1, y - 1), (x, y + 1), (x, y - 1), (x - 1, y - 1), (x - 1, y),
+                 (x - 1, y + 1)]
     for neighbor in neighbors:
         global game
         x = neighbor[0]
@@ -317,7 +332,7 @@ def available_neighbors(cell):
         if not is_in_grid(neighbor) or get_color(grid, x, y) != None:
             pass
         else:
-            position_list = position_list+[get_position(grid, x, y)]
+            position_list = position_list + [get_position(grid, x, y)]
     return position_list
 
 
@@ -346,6 +361,7 @@ def nextSituations(situation, player):
 
     return l_situations
 
+
 def displaySituation(situation):
     """
     displays the situation
@@ -355,8 +371,14 @@ def displaySituation(situation):
     """
     for i in range(8):
         print(" --- --- --- --- --- --- --- --- ")
-        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7-i),WorB(situation, 1, 7-i),WorB(situation, 2, 7-i),WorB(situation, 3, 7-i)
-                                                                        ,WorB(situation, 4, 7-i),WorB(situation, 5, 7-i),WorB(situation, 6, 7-i),WorB(situation, 7, 7-i)))
+        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7 - i),
+                                                                         WorB(situation, 1, 7 - i),
+                                                                         WorB(situation, 2, 7 - i),
+                                                                         WorB(situation, 3, 7 - i)
+                                                                         , WorB(situation, 4, 7 - i),
+                                                                         WorB(situation, 5, 7 - i),
+                                                                         WorB(situation, 6, 7 - i),
+                                                                         WorB(situation, 7, 7 - i)))
 
     print(" --- --- --- --- --- --- --- --- ")
 
@@ -397,22 +419,26 @@ def humanPlayerPlays(game, player, situation):
     coord = input("Where would you play? x, y ")
 
     try:
-        x,y = coord.split(',')
+        x, y = coord.split(',')
 
         if not get_color(situation, int(x), int(y)) == None:
             print("Case already used")
-            humanPlayerPlays(game, player, situation)
-
+            situation = humanPlayerPlays(game, player, situation)
+        elif not catch_play((int(x), int(y)), player):
+            print("cell is not a catch play")
+            situation = humanPlayerPlays(game, player, situation)
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
+            reverse_pawn((int(x), int(y)), player)
             return situation
 
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
-    except:
+    except Exception:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,7]")
-        humanPlayerPlays(game,player,situation)
+        humanPlayerPlays(game, player, situation)
+    return situation
 
 def coef(player):
     """
@@ -431,6 +457,7 @@ def coef(player):
     else:
         return 1
 
+
 def evalFunction(situation, player):
     """
     the evaluation function for the min-max algorithm. It evaluates the given situation, the evaluation function increases with the quality of the situation for the player
@@ -443,28 +470,54 @@ def evalFunction(situation, player):
         The better the situation for the minmax player, the higher the score. The opposite for human player.
     """
     cells_pts = 0
-    dic_pts = {(0,0) : 2 , (0,1) : 0.75 , (0,2) : 0.75 , (0,3) : 0.75 , (0,4) : 0.75 , (0,5) : 0.75 , (0,6) : 0.75 , (0,7) : 2,
-               (1,0) : 0.75 , (1,1) : 0 , (1,2) : 0 , (1,3) : 0 , (1,4) : 0 , (1,5) : 0 , (1,6) : 0 , (1,7) : 0.75,
-               (2,0) : 0.75 , (2,1) : 0 , (2,2) : 0 , (2,3) : 0 , (2,4) : 0 , (2,5) : 0 , (2,6) : 0 , (2,7) : 0.75,
-               (3,0) : 0.75 , (3,1) : 0 , (3,2) : 0 , (3,3) : 0 , (3,4) : 0 , (3,5) : 0 , (3,6) : 0 , (3,7) : 0.75,
-               (4,0) : 0.75 , (4,1) : 0 , (4,2) : 0 , (4,3) : 0 , (4,4) : 0 , (4,5) : 0 , (4,6) : 0 , (4,7) : 0.75,
-               (5,0) : 0.75 , (5,1) : 0 , (5,2) : 0 , (5,3) : 0 , (5,4) : 0 , (5,5) : 0 , (5,6) : 0 , (5,7) : 0.75,
-               (6,0) : 0.75 , (6,1) : 0 , (6,2) : 0 , (6,3) : 0 , (6,4) : 0 , (6,5) : 0 , (6,6) : 0 , (6,7) : 0.75,
-               (7,0) : 2 , (7,1) : 0.75 , (7,2) : 0.75 , (7,3) : 0.75 , (7,4) : 0.75 , (7,5) : 0.75 , (7,6) : 0.75 , (7,7) : 2, 
+    dic_pts = {(0, 0): 2, (0, 1): 0.75, (0, 2): 0.75, (0, 3): 0.75, (0, 4): 0.75, (0, 5): 0.75, (0, 6): 0.75, (0, 7): 2,
+               (1, 0): 0.75, (1, 1): 0, (1, 2): 0, (1, 3): 0, (1, 4): 0, (1, 5): 0, (1, 6): 0, (1, 7): 0.75,
+               (2, 0): 0.75, (2, 1): 0, (2, 2): 0, (2, 3): 0, (2, 4): 0, (2, 5): 0, (2, 6): 0, (2, 7): 0.75,
+               (3, 0): 0.75, (3, 1): 0, (3, 2): 0, (3, 3): 0, (3, 4): 0, (3, 5): 0, (3, 6): 0, (3, 7): 0.75,
+               (4, 0): 0.75, (4, 1): 0, (4, 2): 0, (4, 3): 0, (4, 4): 0, (4, 5): 0, (4, 6): 0, (4, 7): 0.75,
+               (5, 0): 0.75, (5, 1): 0, (5, 2): 0, (5, 3): 0, (5, 4): 0, (5, 5): 0, (5, 6): 0, (5, 7): 0.75,
+               (6, 0): 0.75, (6, 1): 0, (6, 2): 0, (6, 3): 0, (6, 4): 0, (6, 5): 0, (6, 6): 0, (6, 7): 0.75,
+               (7, 0): 2, (7, 1): 0.75, (7, 2): 0.75, (7, 3): 0.75, (7, 4): 0.75, (7, 5): 0.75, (7, 6): 0.75, (7, 7): 2,
                }
 
     for x_list in situation:
 
         for cell in x_list:
 
-            if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
-                cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
+            if get_color(situation, cell['position'][0], cell['position'][1]) == player['color']:
+                cells_pts += dic_pts[get_position(situation, cell['position'][0], cell['position'][1])]
 
     if isFinished(situation) == True:
-        return 5*cells_pts*coef(player)
+        return 5 * cells_pts * coef(player)
 
     else:
-        return 1*cells_pts*coef(player)
+        return 1 * cells_pts * coef(player)
+
+
+def reverse_pawn(position, player):
+    global game
+    x = position[0]
+    y = position[1]
+    neighbors = [(x + 1, y), (x + 1, y + 1), (x + 1, y - 1), (x, y + 1), (x, y - 1), (x - 1, y - 1), (x - 1, y),
+                 (x - 1, y + 1)]
+
+    for neighbor in neighbors:
+        x_neigh = neighbor[0]
+        y_neigh = neighbor[1]
+        delta_x = x_neigh - x
+        delta_y = y_neigh - y
+        list_pawn = []
+        list_pawn.append((x_neigh, y_neigh))
+        while is_in_grid((x_neigh, y_neigh)) and get_color(game['grid'], x_neigh, y_neigh) != player['color'] \
+                and get_color(game['grid'], x_neigh, y_neigh) != None:
+            x_neigh += delta_x
+            y_neigh += delta_y
+            list_pawn.append((x_neigh, y_neigh))
+            if is_in_grid((x_neigh, y_neigh)):
+                if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
+                    list_pawn.pop()
+                    for pos in list_pawn:
+                        set_color(get_grid(game), pos[0], pos[1], Player.get_color(player))
 
 
 ##### Predicates #####
@@ -489,17 +542,15 @@ def playerCanPlay(game, situation, player):
     """
     tells whether player can play in given situation
 
-    :param game: the game 
+    :param game: the game
     :type game: game
     :param situation: the situation to display
     :type situation: a game situation
     :param player: the player
     :type player: player
-    :returns: *(boolean)* -- True iff player can play in situation
+    :returns: (boolean) -- True iff player can play in situation
     """
-    for x in range(8):
-        for y in range(8):
-            if get_grid_color(game, x, y) != get_color(situation, x, y):
-                if get_position(situation, x, y) in extremity_pos(situation):
-                    return catch_play(get_position(situation, x, y), player)
+    for position in extremity_pos(situation):
+        if catch_play(position, player):
+            return True
     return False

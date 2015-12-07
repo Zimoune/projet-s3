@@ -296,7 +296,7 @@ def humanPlayerPlays(game, player, situation):
 
         if not get_color(situation, int(x), int(y)) == None:
             print("Case already used")
-            humanPlayerPlays(game, player, situation)
+            situation = humanPlayerPlays(game, player, situation)
 
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
@@ -308,7 +308,7 @@ def humanPlayerPlays(game, player, situation):
     except:
         print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,2]")
         humanPlayerPlays(game,player,situation)
-
+    return situation
 
 def coef(player):
     """

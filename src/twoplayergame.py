@@ -7,8 +7,8 @@ import sys
 
 currentPlayer = None
 
-def play():
 
+def play():
     global currentPlayer
     global mod
     game_name = "othello"
@@ -33,17 +33,16 @@ def play():
         if currentPlayer == None:
             currentPlayer = Game.get_player1(Game.game)
         else:
-            swap_player_turn(currentPlayer, Game.game)
+            currentPlayer = swap_player_turn(currentPlayer, mod)
 
         if not Game.playerCanPlay(Game.game, situation, currentPlayer):
             print(currentPlayer, " can't play")
-            swap_player_turn(currentPlayer, Game)
+            currentPlayer = swap_player_turn(currentPlayer, Game)
         Game.displaySituation(situation)
         print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
             situation = IA.min_max1(situation, currentPlayer)
-
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
 
@@ -59,9 +58,9 @@ def play():
 
 def swap_player_turn(player, game):
     if player == game.get_player1(game.game):
-        player = game.get_player2(game.game)
+        return game.get_player2(game.game)
     else:
-        player = game.get_player1(game.game)
+        return game.get_player1(game.game)
 
 
 def ask_players_names(color):
@@ -74,6 +73,7 @@ def ask_players_names(color):
 
     except:
         ask_players_names()
-          
+
+
 if __name__ == '__main__':
     play()
