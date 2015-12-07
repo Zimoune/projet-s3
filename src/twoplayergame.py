@@ -45,7 +45,6 @@ def play():
             situation = IA.min_max1(situation, currentPlayer)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
-
         Game.game['nb_plays'] += 1
     winner = Game.getWinner(Game.game, situation, currentPlayer)
 

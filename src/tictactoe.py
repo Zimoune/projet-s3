@@ -295,8 +295,8 @@ def humanPlayerPlays(game, player, situation):
         x,y = coord.split(',')
 
         if not get_color(situation, int(x), int(y)) == None:
-            print("Case already used")
-            situation = humanPlayerPlays(game, player, situation)
+            print("Cell already used")
+            humanPlayerPlays(game, player, situation)
 
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
@@ -417,15 +417,4 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    for x in range(3):
-
-        for y in range(3):
-
-            if get_grid_color(game, x, y) != get_color(situation, x, y):
-
-                if get_grid_color(game, x, y) == None:
-                    return True
-
-                else:
-                    return False
-    return False
+    return True
