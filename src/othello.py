@@ -30,6 +30,14 @@ def get_player1(game):
 
 
 def get_player_name(player):
+    """
+    Get the name of a player
+
+    :param player: a game player
+    :type player: a player
+    :return: the player name
+    :rtype: a string
+    """
     return player['name']
 
 
@@ -496,6 +504,16 @@ def evalFunction(situation, player):
 
 
 def reverse_pawn(position, player):
+    """
+    Reverse the pawn of a catch play
+
+    :param position: a game position
+    :type position: a tuple
+    :param player: a game player
+    :type player: a player
+    :return: None
+    :Side effect: reverse the color of the pawns catch
+    """
     global game
     x = position[0]
     y = position[1]
@@ -519,6 +537,7 @@ def reverse_pawn(position, player):
                     list_pawn.pop()
                     for pos in list_pawn:
                         set_color(get_grid(game), pos[0], pos[1], Player.get_color(player))
+
 
 
 ##### Predicates #####

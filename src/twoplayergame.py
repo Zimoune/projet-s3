@@ -19,7 +19,6 @@ def play(game_name):
     elif game_name == "othello":
         import othello as Game
         mod = __import__("othello")
-        print("othello")
 
     else:
         import tictactoe as Game
@@ -41,7 +40,7 @@ def play(game_name):
         print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
-            situation = IA.min_max1(game_name, situation, currentPlayer)
+            situation = IA.min_max(Game.game, situation, currentPlayer, 9)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
@@ -74,5 +73,5 @@ def ask_players_names(color):
 
 
 if __name__ == '__main__':
-    game_name = "tictactoe"
+    game_name = "nim"
     play(game_name)

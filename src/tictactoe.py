@@ -3,7 +3,6 @@
 
 import player as Player
 import copy
-
 import tictactoeGame as Game
 
 #### default_game ####
@@ -56,6 +55,14 @@ def get_inv_player(player):
         return get_player1(game)
 
 def get_player_name(player):
+    """
+    Get the name of a player
+
+    :param player: a game player
+    :type player: a player
+    :return: the player name
+    :rtype: a string
+    """
     return player['name']
 
 def get_grid(game):
@@ -255,6 +262,18 @@ def nextSituations(situation, player):
 
 
 def XorO(situation, x, y):
+    """
+    Return the symbol of the cell
+
+    :param situation: the situation to display
+    :type situation: a game situation
+        :param x: the x's codinate of a cell
+    :type x: a integer
+    :param y: the y's codinate of a cell
+    :type y: a integer
+    :return: the cell symbol
+    :rtype: a string
+    """
     if get_color(situation, x, y)== None:
         return ''
 
