@@ -250,6 +250,7 @@ def nextSituations(situation, player):
                 set_color(copy_situation, x_cell, y_cell, player['color'])
                 l_situations.append(copy_situation)
 
+
     return l_situations
 
 

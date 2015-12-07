@@ -26,9 +26,10 @@ import player as Player
 
 _DEFAULT_PEBBLES = 25
 
-game = {"player1" : "" , "player2" : "", "nb_plays":0}
+game = {"player1": "", "player2": "", "nb_plays": 0}
 
-color = ['','']
+color = ['', '']
+
 
 def initSituation(game):
     """builds the initial situation for the game.  
@@ -39,7 +40,7 @@ def initSituation(game):
     :type game: game
     :returns: *(situation)* the siutation at the beginning of the game, here just a number
     """
-    if ('pebbles' in game):
+    if 'pebbles' in game:
         return game['pebbles']
 
     else:
@@ -55,7 +56,6 @@ def isFinished(situation):
     :returns: *(boolean)* -- True if the given situation ends the game
     """
     return situation <= 1 
-
 
 
 def playerCanPlay(game, situation, player):

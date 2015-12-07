@@ -1,5 +1,3 @@
-
-
 # -*- coding: utf-8 -*-
 
 
@@ -29,7 +27,7 @@ def initSituation(game):
     :type game: game
     :returns: *(situation)* the siutation at the beginning of the game
     """
-    raise NotImplementedError( "initSituation must be defined to return the initial game configuration" )
+    raise NotImplementedError("initSituation must be defined to return the initial game configuration")
 
 
 def isFinished(situation):
@@ -40,8 +38,7 @@ def isFinished(situation):
     :type situation: a game situation
     :returns: *(boolean)* -- True if the given situation ends the game
     """
-    raise NotImplementedError( "isFinished must be defined as a function to test end of game" )
-
+    raise NotImplementedError("isFinished must be defined as a function to test end of game")
 
 
 def playerCanPlay(game, situation, player):
@@ -56,7 +53,7 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    raise NotImplementedError( "playerCanPlay must be defined to determine whether player can play")
+    raise NotImplementedError("playerCanPlay must be defined to determine whether player can play")
 
 
 def nextSituations(game, situation, player):
@@ -71,8 +68,7 @@ def nextSituations(game, situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    raise NotImplementedError( "nextSituations must be defined as a function that provides successor situations" )
-
+    raise NotImplementedError("nextSituations must be defined as a function that provides successor situations")
 
 
 def getWinner(game, situation, player):
@@ -89,9 +85,7 @@ def getWinner(game, situation, player):
 
     :CU: situation is a final situation
     """
-    raise NotImplementedError( "getWinner function must be defined to tell who win the game" )    
-
-
+    raise NotImplementedError("getWinner function must be defined to tell who win the game")
 
 
 def displaySituation(situation):
@@ -101,7 +95,7 @@ def displaySituation(situation):
     :param situation: the situation to display
     :type situation: a game situation
     """
-    raise NotImplementedError( "displaySituation must be defined to display the situation on the screen" )
+    raise NotImplementedError("displaySituation must be defined to display the situation on the screen")
 
 
 def humanPlayerPlays(game, player, situation):
@@ -116,5 +110,5 @@ def humanPlayerPlays(game, player, situation):
     :type situation: a game situation
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
-    raise NotImplementedError( "humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned" )
+    raise NotImplementedError("humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned")
 
