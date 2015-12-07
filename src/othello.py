@@ -370,8 +370,8 @@ def displaySituation(situation):
     :type situation: a game situation
     """
     for i in range(8):
-        print(" --- --- --- --- --- --- --- --- ")
-        print('|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7 - i),
+        print("   --- --- --- --- --- --- --- --- ")
+        print(7-i,'|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|{:^3}|'.format(WorB(situation, 0, 7 - i),
                                                                          WorB(situation, 1, 7 - i),
                                                                          WorB(situation, 2, 7 - i),
                                                                          WorB(situation, 3, 7 - i)
@@ -380,7 +380,8 @@ def displaySituation(situation):
                                                                          WorB(situation, 6, 7 - i),
                                                                          WorB(situation, 7, 7 - i)))
 
-    print(" --- --- --- --- --- --- --- --- ")
+    print("   --- --- --- --- --- --- --- --- ")
+    print("    0   1   2   3   4   5   6   7  ")
 
 
 def WorB(situation, x, y):
