@@ -1,4 +1,4 @@
-def min_max(game, situation, player, depth=-1):
+def min_max(game_name, game, situation, player, depth=-1):
     """
     Return the best situation for a player thanks to the minimax algorithm
     Minmax is a decision rule used in decision theory, game theory, statistics and philosophy for minimizing the possible loss for a worst case (maximum loss) scenario.
@@ -14,9 +14,9 @@ def min_max(game, situation, player, depth=-1):
     :return: The best situation for a player thanks to the minimax algorithm
     :rtype: situation
     """
-    return __min_max(game, situation, player, depth)[1] 
+    return __min_max(game_name, game, situation, player, depth)[1] 
 
-def __min_max(game, situation, player, depth):
+def __min_max(game_name, game, situation, player, depth):
     """
     The minimax algorithm.
     
@@ -32,8 +32,6 @@ def __min_max(game, situation, player, depth):
     :return: A tuple with two elements: the first is the best situation score, the second is the best situation
     :rtype: tuple<int, situation>
     """
-    game_name = "nim"
-
     if game_name == "nim":
         import nim_game as Game
         mod = __import__("nim_game")
@@ -46,9 +44,6 @@ def __min_max(game, situation, player, depth):
         import tictactoe as Game
         mod = __import__("tictactoe")
     
-    if(depth == -1):
-        depth = game["difficulty"]
-    
     if(Game.isFinished(situation) or depth == 0):
         score = Game.evalFunction(situation, player) * Game.coef(player)
         return (score, situation)
@@ -57,6 +52,6 @@ def __min_max(game, situation, player, depth):
         nextSituations = Game.nextSituations(situation, currentPlayer)
          
         if(Game.coef(player) == 1):
-            return max([(__min_max(game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
+            return max([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
         else:
-            return min([(__min_max(game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
+            return min([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])

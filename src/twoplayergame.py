@@ -40,7 +40,7 @@ def play(game_name):
         print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
-            situation = IA.min_max(Game.game, situation, currentPlayer, 9)
+            situation = IA.min_max(game_name, Game.game, situation, currentPlayer, 9)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
