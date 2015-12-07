@@ -1,7 +1,7 @@
 
 
 def min_max1(situation, player):
-    game_name = "tictactoe"
+    game_name = "nim"
 
     if game_name == "nim":
         import nim_game as Game
@@ -17,7 +17,7 @@ def min_max1(situation, player):
 
     if Game.isFinished(situation):
         score = Game.evalFunction(situation , player)*Game.coef(player)
-        print(situation)
+        #print(situation)
         return (score , situation)
     else:
         nextSituations = Game.nextSituations(situation, player)
@@ -43,7 +43,6 @@ def min_max2(situation, player, depht):
         mod = __import__("tictactoe")
     if Game.isFinished(situation) or depht == 0:
         score = Game.evalFunction(situation , player)*Game.coef(player)
-        print(situation)
         return (score , situation)
     else:
         nextSituations = Game.nextSituations(situation, player)
