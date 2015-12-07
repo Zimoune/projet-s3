@@ -32,15 +32,14 @@ def play():
 
         if currentPlayer == None:
             currentPlayer = Game.get_player1(Game.game)
-
-        elif currentPlayer == Game.get_player1(Game.game):
-            currentPlayer = Game.get_player2(Game.game)
-
         else:
-            currentPlayer = Game.get_player1(Game.game)
-        print(situation)
+            swap_player_turn(currentPlayer, Game.game)
+
+        if not Game.playerCanPlay(Game.game, situation, currentPlayer):
+            print(currentPlayer, " can't play")
+            swap_player_turn(currentPlayer, Game)
         Game.displaySituation(situation)
-        print(Player.get_name(currentPlayer)," turn")
+        print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
             situation = IA.min_max1(situation, currentPlayer)
@@ -56,6 +55,13 @@ def play():
 
     else:
         print(winner['name'], "won")
+
+
+def swap_player_turn(player, game):
+    if player == game.get_player1(game.game):
+        player = game.get_player2(game.game)
+    else:
+        player = game.get_player1(game.game)
 
 
 def ask_players_names(color):
