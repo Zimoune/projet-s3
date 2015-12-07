@@ -398,14 +398,24 @@ def humanPlayerPlays(game, player, situation):
 
     try:
         x,y = coord.split(',')
-        set_color(situation, int(x), int(y), Player.get_color(player))
-        return game
+
+        if not get_color(situation, int(x), int(y)) == None:
+            print("Cell already used")
+            humanPlayerPlays(game, player, situation)
+
+        elif not catch_play((x,y),player):
+            print("Cell is not a catch play")
+            humanPlayerPlays(game, player , situation)
+
+        else:
+            set_color(situation, int(x), int(y), Player.get_color(player))
+            return situation
 
     except KeyboardInterrupt:
         raise KeyboardInterrupt
 
     except:
-        print("input must be 2 seperated with a coma x,y . (x = width , y = height)")
+        print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,7]")
         humanPlayerPlays(game,player,situation)
 
 def coef(player):
@@ -437,14 +447,14 @@ def evalFunction(situation, player):
         The better the situation for the minmax player, the higher the score. The opposite for human player.
     """
     cells_pts = 0
-    dic_pts = {(0,0) : 2 , (0,1) : 0.75 , (0,2) : 0.75 , (0,3) : 0.75 , (0,4) : 0.75 , (0,5) : 0.75 , (0,6) : 0.75 , (0,7) : 2,
-               (1,0) : 0.75 , (1,1) : 0 , (1,2) : 0 , (1,3) : 0 , (1,4) : 0 , (1,5) : 0 , (1,6) : 0 , (1,7) : 0.75,
-               (2,0) : 0.75 , (2,1) : 0 , (2,2) : 0 , (2,3) : 0 , (2,4) : 0 , (2,5) : 0 , (2,6) : 0 , (2,7) : 0.75,
-               (3,0) : 0.75 , (3,1) : 0 , (3,2) : 0 , (3,3) : 0 , (3,4) : 0 , (3,5) : 0 , (3,6) : 0 , (3,7) : 0.75,
-               (4,0) : 0.75 , (4,1) : 0 , (4,2) : 0 , (4,3) : 0 , (4,4) : 0 , (4,5) : 0 , (4,6) : 0 , (4,7) : 0.75,
-               (5,0) : 0.75 , (5,1) : 0 , (5,2) : 0 , (5,3) : 0 , (5,4) : 0 , (5,5) : 0 , (5,6) : 0 , (5,7) : 0.75,
-               (6,0) : 0.75 , (6,1) : 0 , (6,2) : 0 , (6,3) : 0 , (6,4) : 0 , (6,5) : 0 , (6,6) : 0 , (6,7) : 0.75,
-               (7,0) : 2 , (7,1) : 0.75 , (7,2) : 0.75 , (7,3) : 0.75 , (7,4) : 0.75 , (7,5) : 0.75 , (7,6) : 0.75 , (7,7) : 2, 
+    dic_pts = {(0,0) : 3 , (0,1) : 1.5 , (0,2) : 1.5 , (0,3) : 1.5 , (0,4) : 1.5 , (0,5) : 1.5 , (0,6) : 1.5, (0,7) : 3,
+               (1,0) : 1.5 , (1,1) : 1 , (1,2) : 1 , (1,3) : 1 , (1,4) : 1 , (1,5) : 1 , (1,6) : 1 , (1,7) : 1.5,
+               (2,0) : 1.5 , (2,1) : 1 , (2,2) : 1 , (2,3) : 1 , (2,4) : 1 , (2,5) : 1 , (2,6) : 1 , (2,7) : 1.5,
+               (3,0) : 1.5 , (3,1) : 1 , (3,2) : 1 , (3,3) : 1 , (3,4) : 1 , (3,5) : 1 , (3,6) : 1 , (3,7) : 1.5,
+               (4,0) : 1.5 , (4,1) : 1 , (4,2) : 1 , (4,3) : 1 , (4,4) : 1 , (4,5) : 1 , (4,6) : 1 , (4,7) : 1.5,
+               (5,0) : 1.5 , (5,1) : 1 , (5,2) : 1 , (5,3) : 1 , (5,4) : 1 , (5,5) : 1 , (5,6) : 1 , (5,7) : 1.5,
+               (6,0) : 1.5 , (6,1) : 1 , (6,2) : 1 , (6,3) : 1 , (6,4) : 1 , (6,5) : 1 , (6,6) : 1 , (6,7) : 1.5,
+               (7,0) : 3 , (7,1) : 1.5 , (7,2) : 1.5 , (7,3) : 1.5 , (7,4) : 1.5 , (7,5) : 1.5 , (7,6) : 1.5 , (7,7) : 3, 
                }
 
     for x_list in situation:
@@ -459,6 +469,7 @@ def evalFunction(situation, player):
 
     else:
         return 1*cells_pts*coef(player)
+
 
 
 ##### Predicates #####
@@ -491,17 +502,9 @@ def playerCanPlay(game, situation, player):
     :type player: player
     :returns: *(boolean)* -- True iff player can play in situation
     """
-    for x in range(8):
-
-        for y in range(8):
-
-            if get_grid_color(game, x, y) != get_color(situation, x, y):
-
-                if get_position(situation, x, y) in extremity_pos(situation):
-
-                    if catch_play(get_position(situation, x, y), player):
-
-                        return True
+    for position in extremity_pos(situation):
+        if catch_play(position, player):
+            return True
 
     return False
 
