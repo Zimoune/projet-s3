@@ -379,6 +379,7 @@ def nextSituations(situation, player):
             for position in extremity_pos(situation):
                 if catch_play(position, player):
                     set_color(copy_situation, x_cell, y_cell, player['color'])
+                    reverse_pawn((x_cell, y_cell, player)
                     l_situations.append(copy_situation)
 
     return l_situations
