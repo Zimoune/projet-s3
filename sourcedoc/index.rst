@@ -1,5 +1,3 @@
-
-
 ---------
 Projet S3
 ---------
@@ -15,3 +13,7 @@ By : Lefebvre Ryan & Le Pallac Simon & Abdoulaye Chérif
    tictactoe
    tictactoeGame
    player
+   minmax
+   othello
+   othelloGame
+   twoplayergame

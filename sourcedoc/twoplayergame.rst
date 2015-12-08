@@ -4,5 +4,5 @@ Twoplayergame
 -------------
 
 
-.. automodule:: txoplayergame
+.. automodule:: twoplayergame
     :members:
