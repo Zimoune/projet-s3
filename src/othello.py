@@ -312,6 +312,13 @@ def catch_play(position, player):
                     return True
     return False
 
+def available_position(situation, player):
+    extreme = extremity_pos(situation)
+    list_position = []
+    for position in extreme:
+        if catch_play(position, player):
+            list_position.append(position)
+    return list_position
 
 def extremity_pos(situation):
     """
@@ -371,16 +378,12 @@ def nextSituations(situation, player):
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
     l_situations = []
-    for x_list in situation:
-        for cell in x_list:
-            x_cell = get_position_cell(cell)[0]
-            y_cell = get_position_cell(cell)[1]
-            copy_situation = copy.deepcopy(situation)
-            for position in extremity_pos(situation):
-                if catch_play(position, player):
-                    set_color(copy_situation, x_cell, y_cell, player['color'])
-                    reverse_pawn((x_cell, y_cell, player)
-                    l_situations.append(copy_situation)
+    for position in available_position(situation, player):
+        copy_situation = copy.deepcopy(situation)
+        set_color(copy_situation, position[0], position[1], player['color'])
+        reverse_pawn(copy_situation, (position[0], position[1]), player)
+        l_situations.append(copy_situation)
+        displaySituation(copy_situation)
 
     return l_situations
 
@@ -453,7 +456,7 @@ def humanPlayerPlays(game, player, situation):
             situation = humanPlayerPlays(game, player, situation)
         else:
             set_color(situation, int(x), int(y), Player.get_color(player))
-            reverse_pawn((int(x), int(y)), player)
+            reverse_pawn(situation, (int(x), int(y)), player)
             return situation
 
     except KeyboardInterrupt:
@@ -518,7 +521,7 @@ def evalFunction(situation, player):
         return 1 * cells_pts * coef(player)
 
 
-def reverse_pawn(position, player):
+def reverse_pawn(situation, position, player):
     """
     Reverse the pawn of a catch play
 
@@ -529,7 +532,6 @@ def reverse_pawn(position, player):
     :return: None
     :Side effect: reverse the color of the pawns catch
     """
-    global game
     x = position[0]
     y = position[1]
     neighbors = [(x + 1, y), (x + 1, y + 1), (x + 1, y - 1), (x, y + 1), (x, y - 1), (x - 1, y - 1), (x - 1, y),
@@ -542,13 +544,12 @@ def reverse_pawn(position, player):
         delta_y = y_neigh - y
         list_pawn = []
         list_pawn.append((x_neigh, y_neigh))
-        while is_in_grid((x_neigh, y_neigh)) and get_color(game['grid'], x_neigh, y_neigh) != player['color'] \
-                and get_color(game['grid'], x_neigh, y_neigh) != None:
+        while is_in_grid((x_neigh, y_neigh)) and get_color(situation, x_neigh, y_neigh) != player['color'] and get_color(situation, x_neigh, y_neigh) != None:
             x_neigh += delta_x
             y_neigh += delta_y
             list_pawn.append((x_neigh, y_neigh))
             if is_in_grid((x_neigh, y_neigh)):
-                if get_color(game['grid'], x_neigh, y_neigh) == player['color']:
+                if get_color(situation, x_neigh, y_neigh) == player['color']:
                     list_pawn.pop()
                     for pos in list_pawn:
                         set_color(get_grid(game), pos[0], pos[1], Player.get_color(player))
@@ -589,3 +590,4 @@ def playerCanPlay(game, situation, player):
         if catch_play(position, player):
             return True
     return False
+

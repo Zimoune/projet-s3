@@ -247,22 +247,25 @@ def nextSituations(situation, player):
     :type player: player
     :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
     """
-    l_situations = []
-    for x_list in situation:
+    l_situation = []
+    for position in available_position(situation, player):
+        copy_situation = copy.deepcopy(situation)
+        set_color(copy_situation, position[0], position[1], player['color'])
+        l_situation.append(copy_situation)
+        displaySituation(copy_situation)
 
-        for cell in x_list:
-            x_cell = get_position_cell(cell)[0]
-            y_cell = get_position_cell(cell)[1]
-            copy_situation = copy.deepcopy(situation)
-
-            if get_color_cell(cell) == None:
-                set_color(copy_situation, x_cell, y_cell, player['color'])
-                l_situations.append(copy_situation)
-                displaySituation(copy_situation)
+    return l_situation
+        
 
 
-    return l_situations
-
+def available_position(situation, player):
+    l_position = []
+    for x_cell in situation:
+        for cell in x_cell:
+            position = get_position_cell(cell)
+            if get_color(situation, position[0], position[1]) == None:
+                l_position.append(position)
+    return l_position
 
 def XorO(situation, x, y):
     """

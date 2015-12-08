@@ -40,7 +40,7 @@ def play(game_name):
         print(Player.get_name(currentPlayer), " turn")
 
         if currentPlayer['name'] == "Minmax":
-            situation = IA.min_max(game_name, Game.game, situation, currentPlayer, 100)
+            situation = IA.min_max(game_name, Game.game, situation, currentPlayer, 2)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
@@ -73,5 +73,5 @@ def ask_players_names(color):
 
 
 if __name__ == '__main__':
-    game_name = "othello"
+    game_name = "tictactoe"
     play(game_name)
