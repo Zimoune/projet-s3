@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+import random as Random
+
+
 def min_max(game_name, game, situation, player, depth=-1):
     """
     Return the best situation for a player thanks to the minimax algorithm
@@ -14,7 +20,8 @@ def min_max(game_name, game, situation, player, depth=-1):
     :return: The best situation for a player thanks to the minimax algorithm
     :rtype: situation
     """
-    return __min_max(game_name, game, situation, player, depth)[1] 
+    return __min_max(game_name, game, situation, player, depth)[1]
+
 
 def __min_max(game_name, game, situation, player, depth):
     """
@@ -34,27 +41,26 @@ def __min_max(game_name, game, situation, player, depth):
     """
     if game_name == "nim":
         import nim_game as Game
-        mod = __import__("nim_game")
 
     elif game_name == "othello":
         import othello as Game
-        mod = __import__("othello")
 
     else:
         import tictactoe as Game
-        mod = __import__("tictactoe")
-    
-    if(Game.isFinished(situation) or depth == 0):
+
+    if Game.isFinished(situation) or depth == 0:
         score = Game.evalFunction(situation, player)
-        return (score, situation)
+        return score, situation
     else:
-        currentPlayer = player
-        nextSituations = Game.nextSituations(situation, currentPlayer)
-         
-        if(Game.coef(player) == 1):
-            return max([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
+        nextSituations = Game.nextSituations(situation, player)
+
+        if Game.coef(player) == 1:
+            return max([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth - 1)[0], nextSit)
+                        for nextSit in nextSituations])
         else:
-            return min([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
+            return min([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth - 1)[0], nextSit)
+                        for nextSit in nextSituations])
+
 
 def min(l):
     """
@@ -65,14 +71,15 @@ def min(l):
     :return: The situation with the lowest score
     :rtype: tuple<int, situation>
     """
-    theMin = (2000000000, None)
-    
+    the_min = (2000000000, None)
+
     for couple in l:
-        if(theMin[0] > couple[0] or (theMin[0] > couple[0] and Random.randint(0, 101)%2 == 0)):
-            theMin = couple
-    
-    return theMin
-    
+        if the_min[0] > couple[0] or (the_min[0] > couple[0] and Random.randint(0, 101) % 2 == 0):
+            the_min = couple
+
+    return the_min
+
+
 def max(l):
     """
     Return the situation with the best score
@@ -81,11 +88,11 @@ def max(l):
     :type l: list<tuple<int, situation>>
     :return: The situation with the lowest score
     :rtype: tuple<int, situation>
-    """    
-    theMax = (-2000000000, None)
-    
+    """
+    the_max = (-2000000000, None)
+
     for couple in l:
-        if(theMax[0] < couple[0] or (theMax[0] < couple[0] and Random.randint(0, 101)%2 == 0)):
-            theMax = couple
-    
-    return theMax
+        if the_max[0] < couple[0] or (the_max[0] < couple[0] and Random.randint(0, 101) % 2 == 0):
+            the_max = couple
+
+    return the_max

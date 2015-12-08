@@ -3,8 +3,7 @@
 
 import player as Player
 import minmax as IA
-import sys
-import sys
+
 currentPlayer = None
 
 
@@ -19,6 +18,7 @@ def play(game_name):
     elif game_name == "othello":
         import othello as Game
         mod = __import__("othello")
+        print("othello")
 
     else:
         import tictactoe as Game
@@ -28,7 +28,7 @@ def play(game_name):
 
     while not Game.isFinished(situation):
 
-        if currentPlayer == None:
+        if currentPlayer is None:
             currentPlayer = Game.get_player1(Game.game)
         else:
             currentPlayer = swap_player_turn(currentPlayer, mod)
@@ -39,18 +39,18 @@ def play(game_name):
         Game.displaySituation(situation)
         print(Player.get_name(currentPlayer), " turn")
 
-        if currentPlayer['name'] == "Minmax":
+        if Player.get_name(currentPlayer) == "Minmax":
             situation = IA.min_max(game_name, Game.game, situation, currentPlayer, 2)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
     winner = Game.getWinner(Game.game, situation, currentPlayer)
 
-    if winner == None:
+    if winner is None:
         print("equality !")
 
     else:
-        print(winner['name'], "won")
+        print(Player.get_name(winner), "won")
 
 
 def swap_player_turn(player, game):
@@ -69,9 +69,9 @@ def ask_players_names(color):
         raise KeyboardInterrupt
 
     except:
-        ask_players_names()
+        ask_players_names(color)
 
 
 if __name__ == '__main__':
-    game_name = "tictactoe"
+    game_name = "othello"
     play(game_name)

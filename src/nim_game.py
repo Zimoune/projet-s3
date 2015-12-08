@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 
@@ -55,6 +56,7 @@ def isFinished(situation):
     :type situation: a game situation
     :returns: *(boolean)* -- True if the given situation ends the game
     """
+    print(situation)
     return situation <= 1 
 
 
@@ -172,8 +174,7 @@ def humanPlayerPlays(game, player, situation):
     else:
         number_pebbles = [3]
         number_message = "3"
-
-    return situation - _input_pebbles(player, number_pebbles, number_message)
+    return (situation - _input_pebbles(player, number_pebbles, number_message))
 
 def _input_pebbles(player, number_pebbles, number_message):
     """

@@ -110,5 +110,5 @@ def humanPlayerPlays(game, player, situation):
     :type situation: a game situation
     :returns: *(game situtation)* -- the game situation reached afte the human player play
     """
-    raise NotImplementedError("humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned")
-
+    raise NotImplementedError(
+        "humanPlayerPlays must be defined to make the human player plays one round, the reached new situation must be returned")
