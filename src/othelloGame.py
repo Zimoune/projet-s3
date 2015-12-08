@@ -14,10 +14,6 @@ def make_game():
     """
     return a tictactoe game of size 3*3 cells and with two player
 
-    :param name1: a name
-    :type name1: a string
-    :param name2: a name
-    :type name2: a string
     :return: a game
     :rtype: a tuple
     """
@@ -39,6 +35,10 @@ def make_cell(x, y):
     """
     return a tictactoe cell
 
+    :param x: x position
+    :type x: int
+    :param y: y position
+    :type y: int
     :return: a cell with his color
     :rtype: a cell
     """

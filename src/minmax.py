@@ -13,8 +13,8 @@ def min_max(game_name, game, situation, player, depth=-1):
     :type game: game
     :param situation: The current situation
     :type situation: situation:
-    :param players: The player list
-    :type players: list<players>
+    :param player: The player
+    :type player: a player
     :param depth: The recursivity depth for the minimax algorithm (Upper is the depth, better is the decision) (facultative)
     :type depth: int
     :return: The best situation for a player thanks to the minimax algorithm
@@ -31,8 +31,8 @@ def __min_max(game_name, game, situation, player, depth):
     :type game: game
     :param situation: The current situation
     :type situation: situation:
-    :param players: The player list
-    :type players: list<players>
+    :param player: The player
+    :type player: a player
     :param depth: The recursivity depth for the minimax algorithm (Upper is the depth, better is the decision)
                   * If depth = -1 , the depth will be based on the difficulty score
     :type depth: int

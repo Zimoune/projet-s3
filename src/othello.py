@@ -171,9 +171,7 @@ def get_position(situation, x, y):
 def get_grid_color(game, x, y):
     """
     Get the color of a cell of the game
-    
-    :param situation: the grid situation
-    :type situation: list of lists
+
     :param x: the x's codinate of a cell
     :type x: a integer
     :param y: the y's codinate of a cell
@@ -292,13 +290,13 @@ def set_player2(player):
     game['player2'] = player
 
 
-##### Game Management #####
+# Game Management
 
 def initSituation(game_name):
     """builds the initial situation for the game. 
 
-    :param game: the game for which the initial situation is created
-    :type game: game
+    :param game_name: the game for which the initial situation is created
+    :type game_name: game
     :returns: *(situation)* the situation at the beginning of the game
     """
     global game
@@ -414,8 +412,6 @@ def nextSituations(situation, player):
     """
     returns the list of situations that can be reached from given situation by the player in the game
 
-    :param game: the game
-    :type game: a two players game
     :param situation: the current situation
     :type situation: a game situation
     :param player: the current player
@@ -606,7 +602,7 @@ def is_in_grid(position):
     Return True if the position is in the grid
 
     :param position: a cell position
-    :type postion: a tuple
+    :type position: a tuple
     :return: *(Boolean)* -- True if position is in grid
     """
     if get_pos_x(position) >= 0 and get_pos_x(position) < 8 and get_pos_y(position) >= 0 and get_pos_y(position) < 8:

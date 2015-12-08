@@ -81,8 +81,6 @@ def nextSituations(situation, player):
 
     In Nim game, the possible plays are taking 2 or 3 pebbles when possible, then next situations are situations with 2 or 3 pebbles less.
 
-    :param game: the game
-    :type game: a two players game
     :param situation: the current situation
     :type situation: a game situation
     :param player: the current player
