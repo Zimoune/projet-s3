@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+
 def make_game():
     """
     return a tictactoe game of size 3*3 cells and with two player

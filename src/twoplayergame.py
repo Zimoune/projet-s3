@@ -8,6 +8,13 @@ currentPlayer = None
 
 
 def play(game_name, difficulty):
+    """
+    Main game function process
+
+    :param game_name: the game's name
+    :type game_name: str
+    :return: None
+    """
     global currentPlayer
     global mod
 
@@ -56,6 +63,15 @@ def play(game_name, difficulty):
 
 
 def swap_player_turn(player, game):
+    """
+    swap players turn
+
+    :param player: the current player
+    :type player: a player
+    :param game: the game
+    :type game: a game
+    :return:
+    """
     if player == game.get_player1(game.game):
         return game.get_player2(game.game)
     else:
@@ -63,6 +79,13 @@ def swap_player_turn(player, game):
 
 
 def ask_players_names(color):
+    """
+    Ask players's names
+
+    :param color: colors
+    :type color: color list
+    :return:
+    """
     try:
         mod.set_player1(Player.create(input("name player 1: "), color[0]))
         mod.set_player2(Player.create(input("name player 2: "), color[1]))

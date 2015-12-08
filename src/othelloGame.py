@@ -26,7 +26,7 @@ def make_grid():
     return a tictactoe grid of size 3*3 cells
 
     :return: a grid with 3*3 cells
-    :rtype: llist of list of cells
+    :rtype: list of list of cells
     """
     return [[make_cell(x, y) for y in range(8)] for x in range(8)]
 

@@ -5,7 +5,7 @@ import player as Player
 import othelloGame as Game
 import copy
 
-#### default_game ####
+# default_game
 game = Game.make_game()
 
 color = ["white", "black"]
@@ -14,8 +14,7 @@ color = ["white", "black"]
 ######################
 
 
-
-##### Getters #####
+# Getters
 
 def get_player1(game):
     """
@@ -99,9 +98,9 @@ def get_color(situation, x, y):
     
     :param situation: the grid situation
     :type situation: list of lists
-    :param x: the x's codinate of a cell
+    :param x: the x's coordinate of a cell
     :type x: a integer
-    :param y: the y's codinate of a cell
+    :param y: the y's coordinate of a cell
     :type y: a integer
     :return: the cell color
     :rtype: a string
@@ -115,9 +114,9 @@ def get_cell(situation, x, y):
     
     :param situation: the grid situation
     :type situation: list of lists
-    :param x: the x's codinate of a cell
+    :param x: the x's coordinate of a cell
     :type x: a integer
-    :param y: the y's codinate of a cell
+    :param y: the y's coordinate of a cell
     :type y: a integer
     :return: a cell of game
     :rtype: a cell
@@ -154,13 +153,13 @@ def get_cell_y(cell):
 
 def get_position(situation, x, y):
     """
-    Get the postion of a cell of the game
+    Get the position of a cell of the game
     
     :param situation: the grid situation
     :type situation: list of lists
-    :param x: the x's codinate of a cell
+    :param x: the x's coordinate of a cell
     :type x: a integer
-    :param y: the y's codinate of a cell
+    :param y: the y's coordinate of a cell
     :type y: a integer
     :return: a position
     :rtype: a tuple
@@ -172,9 +171,9 @@ def get_grid_color(game, x, y):
     """
     Get the color of a cell of the game
 
-    :param x: the x's codinate of a cell
+    :param x: the x's coordinate of a cell
     :type x: a integer
-    :param y: the y's codinate of a cell
+    :param y: the y's coordinate of a cell
     :type y: a integer
     :return: the cell color
     :rtype: a string
@@ -248,7 +247,7 @@ def getWinner(game, situation, player):
         return get_player2(game)
 
 
-##### Setters #####
+# Setters
 
 def set_color(situation, x, y, color):
     """
@@ -260,6 +259,8 @@ def set_color(situation, x, y, color):
     :type x: a integer
     :param y: the y's codinate of a cell
     :type y: a integer
+    :param color: the color to set
+    :type color: a color
     :return: None
     :sidegrid effect: set the color of the cell
     """
@@ -285,7 +286,7 @@ def set_player2(player):
     :param player: the player 2 of the game
     :type player: a player
     :return: None
-    :sidegrid effect: set the player 2 of the game
+    :side grid effect: set the player 2 of the game
     """
     game['player2'] = player
 
@@ -331,6 +332,8 @@ def catch_play(situation, position, player):
     """
     Get True if a position is a catch play for a player
 
+    :param situation: a situation
+    :type situation: list of list
     :param position: a position
     :type position: a tuple
     :param player: a game player
@@ -347,7 +350,7 @@ def catch_play(situation, position, player):
         delta_x = x_neigh - x
         delta_y = y_neigh - y
         while is_in_grid((x_neigh, y_neigh)) and get_color(situation, x_neigh, y_neigh) != Player.get_color(player) \
-                and get_color(situation, x_neigh, y_neigh) != None:
+                and get_color(situation, x_neigh, y_neigh) is not None:
             x_neigh += delta_x
             y_neigh += delta_y
             if is_in_grid((x_neigh, y_neigh)):
@@ -377,7 +380,7 @@ def extremity_pos(situation):
     position_list = []
     for x_list in situation:
         for cell in x_list:
-            if get_cell_color(cell) == None:
+            if get_cell_color(cell) is None:
                 pass
             else:
                 position_list = position_list + available_neighbors(situation, cell)
@@ -388,6 +391,8 @@ def available_neighbors(situation, cell):
     """
     Get a position list of available neighbor of cell
 
+    :param situation: a situation
+    :type situation: list of list
     :param cell: cell of game
     :type cell: a cell
     :return: a list of available neighbors
@@ -401,7 +406,7 @@ def available_neighbors(situation, cell):
     for neighbor in neighbors:
         x = get_pos_x(neighbor)
         y = get_pos_y(neighbor)
-        if not is_in_grid(neighbor) or get_color(situation, x, y) != None:
+        if not is_in_grid(neighbor) or get_color(situation, x, y) is not None:
             pass
         else:
             position_list = position_list + [get_position(situation, x, y)]
@@ -416,7 +421,8 @@ def nextSituations(situation, player):
     :type situation: a game situation
     :param player: the current player
     :type player: player
-    :returns: *(list<situtation>)* -- the list of situations that can be reached from given situation when player plays one round in the game
+    :returns: *(list<situation>)* -- the list of situations that can be reached from given situation when player plays
+    one round in the game
     """
     l_situations = []
     for position in available_position(situation, player):
@@ -461,7 +467,7 @@ def WorB(situation, x, y):
     :param y: y's coordinate
     :type y: a integer
     """
-    if get_color(situation, x, y) == None:
+    if get_color(situation, x, y) is None:
         return ''
 
     elif get_color(situation, x, y) == 'white':
@@ -481,14 +487,14 @@ def humanPlayerPlays(game, player, situation):
     :type player: player
     :param situation: the current situation
     :type situation: a game situation
-    :returns: *(game situtation)* -- the game situation reached afte the human player play
+    :returns: *(game situation)* -- the game situation reached after the human player play
     """
     coord = input("Where would you play? x, y ")
 
     try:
         x, y = coord.split(',')
 
-        if not get_color(situation, int(x), int(y)) == None:
+        if not get_color(situation, int(x), int(y)) is None:
             print("Cell already used")
             situation = humanPlayerPlays(game, player, situation)
         elif not catch_play(situation, (int(x), int(y)), player):
@@ -503,18 +509,18 @@ def humanPlayerPlays(game, player, situation):
         raise KeyboardInterrupt
 
     except Exception:
-        print("input must be 2 seperated with a coma x,y . (x = width , y = height) and values must be in [0,7]")
+        print("input must be 2 separated with a coma x,y . (x = width , y = height) and values must be in [0,7]")
         humanPlayerPlays(game, player, situation)
     return situation
 
 
 def coef(player):
     """
-    Get a coeficient for the player
+    Get a coefficient for the player
 
     :param player: a game player
     :type player: a player
-    :return: the coeficient player
+    :return: the coefficient player
     :rtype: an integer
     """
     if get_player_name(player) == "Minmax":
@@ -526,7 +532,8 @@ def coef(player):
 
 def evalFunction(situation, player):
     """
-    the evaluation function for the min-max algorithm. It evaluates the given situation, the evaluation function increases with the quality of the situation for the player
+    the evaluation function for the min-max algorithm. It evaluates the given situation, the evaluation function
+    increases with the quality of the situation for the player
          
     :param situation: the current situation
     :type situation: a game situation
@@ -585,7 +592,7 @@ def reverse_pawn(situation, position, player):
         delta_y = y_neigh - y
         list_pawn = [(x_neigh, y_neigh)]
         while is_in_grid((x_neigh, y_neigh)) and get_color(situation, x_neigh, y_neigh) != Player.get_color(
-                player) and get_color(situation, x_neigh, y_neigh) != None:
+                player) and get_color(situation, x_neigh, y_neigh) is not None:
             x_neigh += delta_x
             y_neigh += delta_y
             list_pawn.append((x_neigh, y_neigh))
@@ -596,7 +603,7 @@ def reverse_pawn(situation, position, player):
                         set_color(situation, get_pos_x(pos), get_pos_y(pos), Player.get_color(player))
 
 
-##### Predicates #####
+# Predicates
 def is_in_grid(position):
     """"
     Return True if the position is in the grid
@@ -605,7 +612,7 @@ def is_in_grid(position):
     :type position: a tuple
     :return: *(Boolean)* -- True if position is in grid
     """
-    if get_pos_x(position) >= 0 and get_pos_x(position) < 8 and get_pos_y(position) >= 0 and get_pos_y(position) < 8:
+    if 0 <= get_pos_x(position) <= 7 and 0 <= get_pos_y(position) <= 7:
         return True
     else:
         return False
@@ -621,7 +628,7 @@ def playerCanPlay(game, situation, player):
     :type situation: a game situation
     :param player: the player
     :type player: player
-    :returns: (boolean) -- True iff player can play in situation
+    :returns: (boolean) -- True if player can play in situation
     """
     for position in extremity_pos(situation):
         if catch_play(situation, position, player):

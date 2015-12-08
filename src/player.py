@@ -12,24 +12,29 @@ Module for player representation
 A Player
 """
 
+
 def create(name, color):
     """
+    create a player
 
     :param name: name of the player
     :type name: str
-
+    :param color: color of the player
+    :type color: a color
     :return: a new record for this player
     :rtype: player
     """
     assert type(name) == str
     assert type(color) == str
     return {
-        'name' : name,
-        'color' : color
+        'name': name,
+        'color': color
     }
+
 
 def get_name(player):
     """
+    return player's name
 
     :param player: a player
     :type player: player
@@ -38,6 +43,7 @@ def get_name(player):
     :rtype: str
     """
     return player['name']
+
 
 def set_name(name, player):
     """
@@ -52,6 +58,7 @@ def set_name(name, player):
     """
     player['name'] = name
 
+
 def get_color(player):
     """
 
@@ -62,6 +69,7 @@ def get_color(player):
     :rtype: str
     """
     return player['color']
+
 
 def set_color(color, player):
     """
