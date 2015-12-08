@@ -258,6 +258,7 @@ def nextSituations(situation, player):
             if get_color_cell(cell) == None:
                 set_color(copy_situation, x_cell, y_cell, player['color'])
                 l_situations.append(copy_situation)
+                displaySituation(copy_situation)
 
 
     return l_situations

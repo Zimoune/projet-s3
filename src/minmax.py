@@ -46,7 +46,6 @@ def __min_max(game_name, game, situation, player, depth):
     
     if(Game.isFinished(situation) or depth == 0):
         score = Game.evalFunction(situation, player)
-        print(score)
         return (score, situation)
     else:
         currentPlayer = player
@@ -56,3 +55,37 @@ def __min_max(game_name, game, situation, player, depth):
             return max([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
         else:
             return min([(__min_max(game_name, game, nextSit, Game.get_inv_player(player), depth-1)[0], nextSit) for nextSit in nextSituations])
+
+def min(l):
+    """
+    Return the situation with the lowest score
+    
+    :param l: A list of tuple with two elements: the first is the best situation score, the second is the best situation
+    :type l: list<tuple<int, situation>>
+    :return: The situation with the lowest score
+    :rtype: tuple<int, situation>
+    """
+    theMin = (2000000000, None)
+    
+    for couple in l:
+        if(theMin[0] > couple[0] or (theMin[0] > couple[0] and Random.randint(0, 101)%2 == 0)):
+            theMin = couple
+    
+    return theMin
+    
+def max(l):
+    """
+    Return the situation with the best score
+    
+    :param l: A list of tuple with two elements: the first is the best situation score, the second is the best situation
+    :type l: list<tuple<int, situation>>
+    :return: The situation with the lowest score
+    :rtype: tuple<int, situation>
+    """    
+    theMax = (-2000000000, None)
+    
+    for couple in l:
+        if(theMax[0] < couple[0] or (theMax[0] < couple[0] and Random.randint(0, 101)%2 == 0)):
+            theMax = couple
+    
+    return theMax
