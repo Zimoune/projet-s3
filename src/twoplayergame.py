@@ -7,7 +7,7 @@ import minmax as IA
 currentPlayer = None
 
 
-def play(game_name):
+def play(game_name, difficulty):
     global currentPlayer
     global mod
 
@@ -40,16 +40,18 @@ def play(game_name):
         print(Player.get_name(currentPlayer), " turn")
 
         if Player.get_name(currentPlayer) == "Minmax":
-            situation = IA.min_max(game_name, Game.game, situation, currentPlayer, 2)
+            situation = IA.min_max(game_name, Game.game, situation, currentPlayer, difficulty)
         else:
             situation = Game.humanPlayerPlays(Game.game, currentPlayer, situation)
         Game.game['nb_plays'] += 1
     winner = Game.getWinner(Game.game, situation, currentPlayer)
 
     if winner is None:
+        Game.displaySituation(situation)
         print("equality !")
 
     else:
+        Game.displaySituation(situation)
         print(Player.get_name(winner), "won")
 
 
@@ -73,5 +75,5 @@ def ask_players_names(color):
 
 
 if __name__ == '__main__':
-    game_name = "othello"
-    play(game_name)
+    game_name = "tictactoe"
+    play(game_name, 3)
