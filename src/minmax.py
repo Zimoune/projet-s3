@@ -45,7 +45,8 @@ def __min_max(game_name, game, situation, player, depth):
         mod = __import__("tictactoe")
     
     if(Game.isFinished(situation) or depth == 0):
-        score = Game.evalFunction(situation, player) * Game.coef(player)
+        score = Game.evalFunction(situation, player)
+        print(score)
         return (score, situation)
     else:
         currentPlayer = player

@@ -52,6 +52,20 @@ def get_player2(game):
     """
     return game['player2']
 
+def get_inv_player(player):
+    """
+    Get the other player of the game
+
+    :param player: a game player
+    :type player: a player
+    :return: a game player
+    :rtype: a player
+    """
+    global game
+    if player == get_player1(game):
+        return get_player2(game)
+    else:
+        return get_player1(game)
 
 def get_grid(game):
     """

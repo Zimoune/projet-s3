@@ -249,10 +249,12 @@ def nextSituations(situation, player):
     """
     l_situations = []
     for x_list in situation:
+
         for cell in x_list:
             x_cell = get_position_cell(cell)[0]
             y_cell = get_position_cell(cell)[1]
             copy_situation = copy.deepcopy(situation)
+
             if get_color_cell(cell) == None:
                 set_color(copy_situation, x_cell, y_cell, player['color'])
                 l_situations.append(copy_situation)
@@ -360,17 +362,20 @@ def evalFunction(situation, player):
         The better the situation for the minmax player, the higher the score. The opposite for human player.
     """
     cells_pts = 0
-    dic_pts = {(0,0) : 0.75 , (0,1) : 0 , (0,2) : 0.75 ,
-               (1,0) : 0    , (1,1) : 1 , (1,2) : 0 ,
-               (2,0) : 0.75 , (2,1) : 0 , (2,1) : 0.75 }
+    dic_pts = {(0,0) : 0.75 , (0,1) : 0.1 , (0,2) : 0.75 ,
+               (1,0) : 0.1    , (1,1) : 1 , (1,2) : 0.1 ,
+               (2,0) : 0.75 , (2,1) : 0.1 , (2,2) : 0.75 }
+    o_player = get_inv_player(player)
 
     for x_list in situation:
 
         for cell in x_list:
-            print(cell)
 
             if get_color(situation, cell['position'][0] , cell['position'][1]) == player['color']:
                 cells_pts += dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
+
+            elif get_color(situation, cell['position'][0] , cell['position'][1]) == o_player['color']:
+                cells_pts = cells_pts - dic_pts[get_position(situation, cell['position'][0] , cell['position'][1])]
 
     if is_winner(situation) == True:
         return 5*cells_pts*coef(player)
