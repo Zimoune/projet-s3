@@ -566,6 +566,20 @@ def evalFunction(situation, player):
     else:
         return 1 * cells_pts * coef(player)
 
+def coef_lines(situation, player):
+    lines=[[(0,0)],
+           [(0,7)],
+           [(7,7)],
+           [(7,0)],
+           [(1,0), (0,1)],
+           [(0,6), (1,7)],
+           [(7,6), (6,7)],
+           [(6,0), (7,1)],
+           ]
+    for diag in lines:
+           for position in diag:
+               if get_color(situation, position[0], position[1]):
+                   
 
 def reverse_pawn(situation, position, player):
     """
