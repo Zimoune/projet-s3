@@ -456,6 +456,7 @@ def make_dic(situation, player):
     dic_pts = {(0, 0): 0.75, (0, 1): 0.1, (0, 2): 0.75,
                (1, 0): 0.1, (1, 1): 1, (1, 2): 0.1,
                (2, 0): 0.75, (2, 1): 0.1, (2, 2): 0.75}
+    corner_list = [(0,0), (2,0), (2,0), (2,2)]
     for x_list in situation:
 
         for cell in x_list:
@@ -478,6 +479,13 @@ def make_dic(situation, player):
 
                         except KeyError:
                             pass
+
+            if get_position_cell(cell) in corner_list and get_color(situation, x, y) == o_player['color']:
+                neighbors = [(x+2, y+2), (x+2, y-2), (x-2, y-2), (x-2, y+2)]
+
+                for neighbor in neighbors:
+                    if is_in_grid(neighbor):
+                        dic_pts[neighbor] += 1
     return dic_pts
 
 
