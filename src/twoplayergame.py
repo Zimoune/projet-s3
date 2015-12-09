@@ -25,7 +25,6 @@ def play(game_name, difficulty):
     elif game_name == "othello":
         import othello as Game
         mod = __import__("othello")
-        print("othello")
 
     else:
         import tictactoe as Game
@@ -96,7 +95,17 @@ def ask_players_names(color):
     except:
         ask_players_names(color)
 
+def play_graphique(game_name, difficulty):
+    if game_name == "tictactoe":
+        import tictactoeGraph as Game
+        mod = __import__("nim_game")
+
+    elif game_name == "othello":
+        import othello as Game
+        mod = __import__("othello")
+
+    Game.play()
 
 if __name__ == '__main__':
     game_name = "tictactoe"
-    play(game_name, 3)
+    play_graphique(game_name, 3)
